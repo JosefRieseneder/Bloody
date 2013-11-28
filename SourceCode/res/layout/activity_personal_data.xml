@@ -13,21 +13,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:text="@string/bp_measurement" 
-          />
+        <fragment
+            android:id="@+id/welcome_fragment"
+            android:name="at.fhooe.mhs.bloody.personalData.WelcomeFragment"
+            android:layout_width="fill_parent"
+            android:layout_weight="0.5" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:layout_weight="0.5"
-            android:text="@string/personal_data"
-            android:layout_marginTop="20dp" />
+            android:text="@string/personal_data" />
     </LinearLayout>
 
 </RelativeLayout>

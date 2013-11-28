@@ -4,5 +4,9 @@
     <string name="app_name">Bloody</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    
+    <!-- main activity -->
+    <string name="bp_measurement">Blood Pressure Measurement</string>
+    <string name="personal_data">Enter Personal Data</string>
 
 </resources>
