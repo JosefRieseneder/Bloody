@@ -1,7 +1,7 @@
 /**
  * 
  */
-package at.fhooe.mhs.bloody.personalData;
+package at.fhooe.mhs.bloody.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;

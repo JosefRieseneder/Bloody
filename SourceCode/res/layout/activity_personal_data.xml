@@ -15,7 +15,7 @@
 
         <fragment
             android:id="@+id/fragment"
-            android:name="at.fhooe.mhs.bloody.personalData.WelcomeFragment"
+            android:name="at.fhooe.mhs.bloody.fragments.WelcomeFragment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="at.fhooe.mhs.bloody.MainActivity"
+            android:name="at.fhooe.mhs.bloody.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="at.fhooe.mhs.bloody.personalData.PersonalDataActivity"
+            android:name="at.fhooe.mhs.bloody.activities.PersonalDataActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="at.fhooe.mhs.bloody.measurementdata.MeasurementActivity"
+            android:name="at.fhooe.mhs.bloody.activities.MeasurementActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

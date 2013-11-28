@@ -1,4 +1,4 @@
-package at.fhooe.mhs.bloody;
+package at.fhooe.mhs.bloody.activities;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -7,9 +7,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import at.fhooe.mhs.bloody.measurementdata.MeasurementActivity;
+import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.personalData.PersonalData;
-import at.fhooe.mhs.bloody.personalData.PersonalDataActivity;
 
 public class MainActivity extends Activity
 {
