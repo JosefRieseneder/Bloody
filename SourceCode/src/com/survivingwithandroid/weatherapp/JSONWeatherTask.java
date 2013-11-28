@@ -3,6 +3,7 @@ package com.survivingwithandroid.weatherapp;
 import org.json.JSONException;
 
 import android.os.AsyncTask;
+import at.fhooe.mhs.bloody.weather.listener.WeatherListener;
 
 import com.survivingwithandroid.weatherapp.model.Weather;
 
@@ -24,6 +25,8 @@ import com.survivingwithandroid.weatherapp.model.Weather;
 
 public class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
 
+	private WeatherListener weatherListener;
+	
 	@Override
 	protected Weather doInBackground(String... params) {
 		Weather weather = new Weather();
@@ -47,7 +50,10 @@ public class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
 	protected void onPostExecute(Weather weather) {
 		super.onPostExecute(weather);
 
-		// TODO: store weather data
+		if (weatherListener != null) {
+			weatherListener.onWeatherReceived(weather);
+		}
+		
 		// if (weather.iconData != null && weather.iconData.length > 0) {
 		// Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0,
 		// weather.iconData.length);
@@ -68,4 +74,7 @@ public class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
 
 	}
 
+	public void setWeatherListener(WeatherListener weatherListener) {
+		this.weatherListener = weatherListener;
+	}
 }

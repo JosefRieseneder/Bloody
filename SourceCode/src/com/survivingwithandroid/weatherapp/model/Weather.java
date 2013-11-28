@@ -11,6 +11,8 @@
  */
 package com.survivingwithandroid.weatherapp.model;
 
+import java.io.Serializable;
+
 /*
  * Copyright (C) 2013 Surviving with Android (http://www.survivingwithandroid.com)
  *
@@ -26,7 +28,8 @@ package com.survivingwithandroid.weatherapp.model;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class Weather {
+@SuppressWarnings("serial")
+public class Weather implements Serializable{
 	
 	public Location location;
 	public CurrentCondition currentCondition = new CurrentCondition();
@@ -38,7 +41,7 @@ public class Weather {
 	
 	public byte[] iconData;
 	
-	public  class CurrentCondition {
+	public  class CurrentCondition implements Serializable{
 		private int weatherId;
 		private String condition;
 		private String descr;
@@ -88,7 +91,7 @@ public class Weather {
 		
 	}
 	
-	public  class Temperature {
+	public  class Temperature implements Serializable{
 		private float temp;
 		private float minTemp;
 		private float maxTemp;
@@ -114,7 +117,7 @@ public class Weather {
 		
 	}
 	
-	public  class Wind {
+	public  class Wind implements Serializable{
 		private float speed;
 		private float deg;
 		public float getSpeed() {
@@ -133,7 +136,7 @@ public class Weather {
 		
 	}
 	
-	public  class Rain {
+	public  class Rain implements Serializable{
 		private String time;
 		private float ammount;
 		public String getTime() {
@@ -153,7 +156,7 @@ public class Weather {
 		
 	}
 
-	public  class Snow {
+	public  class Snow implements Serializable{
 		private String time;
 		private float ammount;
 		
@@ -173,7 +176,7 @@ public class Weather {
 		
 	}
 	
-	public  class Clouds {
+	public  class Clouds implements Serializable{
 		private int perc;
 
 		public int getPerc() {
