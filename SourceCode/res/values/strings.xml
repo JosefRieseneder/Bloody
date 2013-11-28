@@ -12,5 +12,9 @@
     <!-- wizard -->
     <string name="welcome_string">Welcome! Before you can log your blood pressure data, you have to enter some personal data</string>
     <string name="next">next</string>
+    
+    <!-- measurements -->
+    <string name="save">Save</string>
+    <string name="cancle">Cancle</string>
 
 </resources>

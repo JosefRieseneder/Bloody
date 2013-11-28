@@ -26,6 +26,10 @@
             android:name="at.fhooe.mhs.bloody.personalData.PersonalDataActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="at.fhooe.mhs.bloody.measurementdata.MeasurementActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

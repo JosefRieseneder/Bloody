@@ -18,16 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:text="@string/bp_measurement" 
-          />
+            android:text="@string/bp_measurement" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:layout_weight="0.5"
-            android:text="@string/personal_data"
-            android:layout_marginTop="20dp" />
+            android:text="@string/personal_data" />
     </LinearLayout>
 
 </RelativeLayout>

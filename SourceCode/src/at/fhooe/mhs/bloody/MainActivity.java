@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import at.fhooe.mhs.bloody.measurementdata.MeasurementActivity;
 import at.fhooe.mhs.bloody.personalData.PersonalData;
 import at.fhooe.mhs.bloody.personalData.PersonalDataActivity;
 
@@ -27,8 +28,6 @@ public class MainActivity extends Activity
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-		
-		
 	}
 
 	public void initButtons() {
@@ -51,7 +50,7 @@ public class MainActivity extends Activity
 	}
 	
 	private void openBloodPressureActivity(){
-		
+		startActivity(new Intent(this, MeasurementActivity.class));
 	}
 	
 	private void openPersonalDAtaActivity(){
