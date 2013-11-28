@@ -15,15 +15,14 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:buttonStyle">@style/button_style</item>
+        <item name="android:textSize">@dimen/text_size_xxxlarge</item>
     </style>
 
-    
-    
     <!-- Button style. -->
     <style name="button_style" parent="android:style/Widget.Button">
-     <item name="android:background">@drawable/button_blue_selector</item>
-     <item name="android:textColor">@color/pure_black</item> <!-- How to specify different color for different state? -->
-     <item name="android:textSize">@dimen/text_size_xxxlarge</item>
+        <item name="android:background">@drawable/button_blue_selector</item>
+        <item name="android:textColor">@color/pure_black</item> <!-- How to specify different color for different state? -->
+        <!-- <item name="android:textSize">@dimen/text_size_xxxlarge</item> -->
     </style>
 
 </resources>

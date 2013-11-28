@@ -5,16 +5,23 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- general -->
+    <string name="save">Save</string>
+    <string name="cancle">Cancle</string>
+    <string name="ok">OK</string>
+
     <!-- main activity -->
+
     <string name="bp_measurement">Blood Pressure Measurement</string>
     <string name="personal_data">Enter Personal Data</string>
 
     <!-- wizard -->
     <string name="welcome_string">Welcome! Before you can log your blood pressure data, you have to enter some personal data</string>
     <string name="next">next</string>
-    
-    <!-- measurements -->
-    <string name="save">Save</string>
-    <string name="cancle">Cancle</string>
+
+    <!-- wizard -->
+    <string name="systolic_value">Systolic</string>
+    <string name="asystolic_value">Asystolic</string>
+    <string name="heartrate_value">Heartrate</string>
 
 </resources>

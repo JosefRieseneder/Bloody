@@ -10,7 +10,7 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,18 +25,19 @@
                 android:gravity="center_vertical" >
 
                 <TextView
-                    android:id="@+id/systolicTextView"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvSystolic"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:text="@string/systolic_value" />
 
-                <NumberPicker
-                    android:id="@+id/systolicPicker"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/etSystolic"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.3"
+                    android:editable="false" >
+                </EditText>
             </LinearLayout>
 
             <LinearLayout
@@ -45,21 +46,23 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/systolicLinearLayout"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical" >
 
                 <TextView
-                    android:id="@+id/asystolicTextView"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvAsystolic"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:text="@string/asystolic_value" />
 
-                <NumberPicker
-                    android:id="@+id/asystolicPicker"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/etAsystolic"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.3"
+                    android:editable="false" >
+                </EditText>
             </LinearLayout>
 
             <LinearLayout
@@ -68,27 +71,29 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/asystolicLinearLayout"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical" >
 
                 <TextView
-                    android:id="@+id/heartrateTextView"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvHeartRate"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:text="@string/heartrate_value" />
 
-                <NumberPicker
-                    android:id="@+id/heartratePicker"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/etHeartRate"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.3"
+                    android:editable="false" >
+                </EditText>
             </LinearLayout>
 
             <Button
                 android:id="@+id/buttonMeasurementSave"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="130dp"
                 android:layout_below="@+id/heartrateLayout"
                 android:layout_marginTop="10dp"
                 android:text="@string/save" />
@@ -96,7 +101,7 @@
             <Button
                 android:id="@+id/buttonMeasurementCancle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="130dp"
                 android:layout_below="@+id/buttonMeasurementSave"
                 android:layout_marginTop="10dp"
                 android:text="@string/cancle" />
