@@ -34,7 +34,7 @@ public class MainActivity extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				openBloodPressureActivity();
+				startActivity(new Intent(MainActivity.this, MeasurementActivity.class));
 				
 			}
 		});
@@ -43,20 +43,10 @@ public class MainActivity extends Activity
 			
 			@Override
 			public void onClick(View v) {
-				openPersonalDAtaActivity();
+				startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
 			}
 		});
 	}
-	
-	private void openBloodPressureActivity(){
-		startActivity(new Intent(this, MeasurementActivity.class));
-	}
-	
-	private void openPersonalDAtaActivity(){
-		startActivity(new Intent(this, PersonalDataActivity.class));
-	}
-
-
-	
+		
 
 }
