@@ -19,9 +19,14 @@
     <string name="welcome_string">Welcome! Before you can log your blood pressure data, you have to enter some personal data</string>
     <string name="next">next</string>
 
-    <!-- wizard -->
+    <!-- measurement -->
     <string name="systolic_value">Systolic</string>
     <string name="asystolic_value">Asystolic</string>
     <string name="heartrate_value">Heartrate</string>
+
+    <!-- health_status -->
+    <string name="health_status">Helth Status</string>
+    <string name="share">Share</string>
+    <string name="timeline">Timeline</string>
 
 </resources>

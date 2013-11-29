@@ -21,8 +21,9 @@
     <!-- Button style. -->
     <style name="button_style" parent="android:style/Widget.Button">
         <item name="android:background">@drawable/button_blue_selector</item>
-        <item name="android:textColor">@color/pure_black</item> <!-- How to specify different color for different state? -->
-        <!-- <item name="android:textSize">@dimen/text_size_xxxlarge</item> -->
+        <item name="android:textColor">@color/pure_black</item>
+        <item name="android:minHeight">100dip</item>
     </style>
+
 
 </resources>

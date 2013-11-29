@@ -6,10 +6,12 @@ package at.fhooe.mhs.bloody.activities;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.GetChars;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.fragments.NumberPickerDialog;
@@ -104,6 +106,26 @@ public class MeasurementActivity extends Activity implements
 			}
 		});
 
+		// Buttons
+		Button save = (Button) findViewById(R.id.buttonMeasurementSave);
+		Button cancle = (Button) findViewById(R.id.buttonMeasurementCancle);
+
+		save.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MeasurementActivity.this,
+						HealthStatusActivity.class));
+			}
+		});
+
+		cancle.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
 	// --------------------------------------
@@ -113,7 +135,6 @@ public class MeasurementActivity extends Activity implements
 	public void onNumberChanged(int id, int value) {
 		EditText et = (EditText) findViewById(id);
 		et.setText("" + value);
-
 	}
 
 }

@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import at.fhooe.mhs.bloody.R;
@@ -21,23 +24,19 @@ public class NumberPickerDialog extends DialogFragment implements
 	private int minValue;
 	private int maxValue;
 	private int curValue;
-
+	
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder b = new AlertDialog.Builder(getActivity())
-				.setTitle(title).setPositiveButton("OK",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								curValue = numberPicker.getValue();
-								if (listener != null) {
-									listener.onNumberChanged(id, curValue);
-								}
-								dialog.dismiss();
-							}
-						});
-
-		LayoutInflater inflater = getActivity().getLayoutInflater();
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		//setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		getDialog().setTitle(title);
+		
 		View v = inflater.inflate(R.layout.dialog_number_picker, null);
 		numberPicker = (NumberPicker) v.findViewById(R.id.dialog_nr_picker);
 
@@ -45,10 +44,21 @@ public class NumberPickerDialog extends DialogFragment implements
 		numberPicker.setMaxValue(maxValue);
 		numberPicker.setValue(curValue);
 		numberPicker.setOnValueChangedListener(this);
-
-		b.setView(v);
-		return b.create();
-
+		
+		Button okButton = (Button)v.findViewById(R.id.dialog_nr_buttonOK);
+		okButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				curValue = numberPicker.getValue();
+				if (listener != null) {
+					listener.onNumberChanged(id, curValue);
+				}
+				dismiss();
+			}
+		});
+		
+		return v;
 	}
 
 	public void doSettings(NumberPickerListener listener, int id, String title,
@@ -64,6 +74,5 @@ public class NumberPickerDialog extends DialogFragment implements
 	@Override
 	public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 		curValue = newVal;
-
 	}
 }
