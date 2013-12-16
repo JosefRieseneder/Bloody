@@ -33,7 +33,7 @@ public class MainActivity extends Activity
 		}
 		else if (gps.hasValidLocation()) {
 			Toast.makeText(getApplicationContext(),
-					"Your Location is - \nLat: " + gps.getLatitude()
+					"Your Location is " + gps.getLocationString() + " - \nLat: " + gps.getLatitude()
 					+ "\nLong: " + gps.getLongitude(), Toast.LENGTH_LONG).show();   
 		}
 	}

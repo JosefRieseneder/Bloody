@@ -3,12 +3,17 @@
  */
 package at.fhooe.mhs.bloody.locationservice;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Criteria;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -42,6 +47,7 @@ public class GPSService extends Service implements LocationListener {
 	private Location location;
 	private double latitude;
 	private double longitude;
+	private String locationString;
 
 	// The minimum distance to change Updates in meters
 	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
@@ -71,17 +77,12 @@ public class GPSService extends Service implements LocationListener {
 				this.canGetLocation = true;
 				String provider = "";
 				if (isNetworkEnabled) {
-					Log.d("GPSService", "Network enabled");
+//					Log.d("GPSService", "Network enabled");
 					provider = LocationManager.NETWORK_PROVIDER;
 				}
-				else if (isGPSEnabled) {
-					Log.d("GPSService", "GPS enabled");
-					provider = LocationManager.GPS_PROVIDER;
-				}
 				else {
-					Log.d("GPSService", "No location service enabled, requesting best provider");
-					Criteria criteria = new Criteria();
-					provider = locationManager.getBestProvider(criteria, true);
+//					Log.d("GPSService", "GPS enabled");
+					provider = LocationManager.GPS_PROVIDER;
 				}
 
 				location = locationManager.getLastKnownLocation(provider);
@@ -133,6 +134,10 @@ public class GPSService extends Service implements LocationListener {
 		}
 
 		return longitude;
+	}
+
+	public String getLocationString() {
+		return locationString;
 	}
 
 	/**
@@ -187,6 +192,18 @@ public class GPSService extends Service implements LocationListener {
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
 		Log.d("GPSService", "lat: " + latitude + ", lon: " + longitude);
+		Geocoder geocoder = new Geocoder(context);
+		List<Address> addresses = new ArrayList<Address>();
+		try {
+			addresses = geocoder.getFromLocation(latitude, longitude, 1);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (addresses.size() > 0) {
+			Address address = addresses.get(0);
+			locationString = address.getSubAdminArea() + ", " + address.getCountryCode();
+		}
 	}
 
 	@Override
