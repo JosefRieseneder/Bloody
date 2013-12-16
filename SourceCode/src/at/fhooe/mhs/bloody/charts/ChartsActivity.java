@@ -2,6 +2,7 @@ package at.fhooe.mhs.bloody.charts;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 
 public class ChartsActivity extends Activity
@@ -16,9 +17,11 @@ public class ChartsActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 
-		BloodPressureChartView mView = new BloodPressureChartView(this);
+		BloodPressureChartView view = new BloodPressureChartView(this);
+		view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(mView);
+		setContentView(view);
 	}
 
 }

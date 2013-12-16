@@ -5,4 +5,35 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- general -->
+    <string name="save">Save</string>
+    <string name="cancle">Cancle</string>
+    <string name="ok">OK</string>
+    <string name="next">Next</string>
+
+    <!-- main activity -->
+
+    <string name="bp_measurement">Blood Pressure Measurement</string>
+    <string name="personal_data">Enter Personal Data</string>
+
+    <!-- wizard -->
+    <string name="welcome_string">Welcome! Before you can log your blood pressure data, you have to enter some personal data</string>
+    <string name="national_insurance_number">National Insurance Number</string>
+    <string name="doctor_email">Doctors E-Mail</string>
+
+    <!-- measurement -->
+    <string name="systolic_value">Systolic</string>
+    <string name="diastolic_value">Diastolic</string>
+    <string name="heartrate_value">Heartrate</string>
+
+    <!-- health_status -->
+    <string name="health_status">Helth Status</string>
+    <string name="share">Share</string>
+    <string name="timeline">Timeline</string>
+    
+    <!-- charts -->
+    <string name="charts_title">Helth Status</string>
+    <string name="charts_sub_blood">Blood pressure</string>
+    <string name="charts_sub_air">Air pressure</string>
+
 </resources>

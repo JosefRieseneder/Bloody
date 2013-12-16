@@ -41,31 +41,30 @@
 
 package at.fhooe.mhs.bloody.charts;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import org.afree.chart.AFreeChart;
-import org.afree.chart.ChartFactory;
+import org.afree.chart.axis.AxisLocation;
 import org.afree.chart.axis.DateAxis;
+import org.afree.chart.axis.NumberAxis;
+import org.afree.chart.plot.CombinedDomainXYPlot;
+import org.afree.chart.plot.PlotOrientation;
 import org.afree.chart.plot.XYPlot;
+import org.afree.chart.renderer.xy.StandardXYItemRenderer;
 import org.afree.chart.renderer.xy.XYItemRenderer;
-import org.afree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.afree.data.time.Day;
-import org.afree.data.time.Month;
-import org.afree.data.time.TimeSeries;
-import org.afree.data.time.TimeSeriesCollection;
 import org.afree.data.xy.XYDataset;
-import org.afree.graphics.SolidColor;
-import org.afree.ui.RectangleInsets;
+import org.afree.data.xy.XYSeries;
+import org.afree.data.xy.XYSeriesCollection;
+import org.afree.graphics.geom.Font;
 
 import android.content.Context;
-import android.graphics.Color;
+import at.fhooe.mhs.bloody.R;
 
 /**
  * TimeSeriesChartDemo01View
  */
 public class BloodPressureChartView extends ChartView
 {
+
+	private Context mContext;
 
 	/**
 	 * constructor
@@ -75,117 +74,141 @@ public class BloodPressureChartView extends ChartView
 	public BloodPressureChartView(Context context)
 	{
 		super(context);
+		mContext = context;
 
-		final AFreeChart chart = createChart(createDataset());
+		final AFreeChart chart = createCombinedChart();
+		// final AFreeChart chart = createChart(createDataset());
 
 		setChart(chart);
 	}
 
-	/**
-	 * Creates a chart.
-	 * 
-	 * @param dataset
-	 *            a dataset.
-	 * 
-	 * @return A chart.
-	 */
-	private static AFreeChart createChart(XYDataset dataset)
+	private AFreeChart createCombinedChart()
 	{
 
-		AFreeChart chart = ChartFactory.createTimeSeriesChart(
-				"Legal & General Unit Trust Prices", // title
-				"Date", // x-axis label
-				"Price Per Unit", // y-axis label
-				dataset, // data
-				true, // create legend?
-				true, // generate tooltips?
-				false // generate URLs?
-				);
+		// create subplot 1...
+		final XYDataset bloodData = createBloodPressureDataSet();
+		final XYItemRenderer bloodRenderer = new StandardXYItemRenderer();
+		final NumberAxis bloodRangeAxis = new NumberAxis(mContext
+				.getResources().getString(R.string.charts_sub_blood));
+		final XYPlot bloodSubPlot = new XYPlot(bloodData, null, bloodRangeAxis,
+				bloodRenderer);
 
-		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));
+		Font font = new Font("Axis", 0, 30);
+		bloodRangeAxis.setTickLabelFont(font);
 
-		XYPlot plot = (XYPlot) chart.getPlot();
-		plot.setBackgroundPaintType(new SolidColor(Color.LTGRAY));
-		plot.setDomainGridlinePaintType(new SolidColor(Color.WHITE));
-		plot.setRangeGridlinePaintType(new SolidColor(Color.WHITE));
-		plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
-		plot.setDomainCrosshairVisible(true);
-		plot.setRangeCrosshairVisible(true);
+		bloodSubPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
 
-		XYItemRenderer r = plot.getRenderer();
-		if (r instanceof XYLineAndShapeRenderer)
-		{
-			XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
-			renderer.setBaseShapesVisible(true);
-			renderer.setBaseShapesFilled(true);
-			renderer.setDrawSeriesLineAsPath(true);
-		}
+		// final XYTextAnnotation annotation = new XYTextAnnotation("Hello!",
+		// 50.0, 10000.0);
+		// annotation.setRotationAngle(Math.PI / 4.0);
+		// subplot1.addAnnotation(annotation);
 
-		DateAxis axis = (DateAxis) plot.getDomainAxis();
-		axis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yy"));
+		// create subplot 2...
+		final XYDataset airData = createAirPressureDataSet();
+		final XYItemRenderer airRenderer = new StandardXYItemRenderer();
+		final NumberAxis airRangeAxis = new NumberAxis(mContext.getResources()
+				.getString(R.string.charts_sub_air));
+		airRangeAxis.setAutoRangeIncludesZero(false);
+		final XYPlot airSubplot = new XYPlot(airData, null, airRangeAxis,
+				airRenderer);
+		airSubplot.setRangeAxisLocation(AxisLocation.TOP_OR_LEFT);
 
-		return chart;
+		// parent plot...
+		final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(
+				new DateAxis());
+		plot.setGap(10.0);
+
+		// add the subplots...
+		plot.add(bloodSubPlot, 1);
+		plot.add(airSubplot, 1);
+		plot.setOrientation(PlotOrientation.VERTICAL);
+
+		// return a new chart containing the overlaid plot...
+		return new AFreeChart(mContext.getResources().getString(
+				R.string.charts_title), AFreeChart.DEFAULT_TITLE_FONT, plot,
+				true);
 
 	}
 
 	/**
-	 * Creates a dataset, consisting of two series of monthly data.
+	 * Creates a sample dataset.
 	 * 
-	 * @return The dataset.
+	 * @return Series 1.
 	 */
-	private static XYDataset createDataset()
+	private XYDataset createBloodPressureDataSet()
+	{
+		// create dataset 1...
+		final XYSeries series1 = new XYSeries(mContext.getResources()
+				.getString(R.string.systolic_value));
+		series1.add(10.0, 120);
+		series1.add(20.0, 123);
+		series1.add(30.0, 125);
+		series1.add(40.0, 122);
+		series1.add(50.0, 124);
+		series1.add(60.0, 128);
+		series1.add(70.0, 123);
+		series1.add(80.0, 118);
+		series1.add(90.0, 119);
+		series1.add(100.0, 118);
+		series1.add(110.0, 120);
+		series1.add(120.0, 121);
+		series1.add(130.0, 122);
+		series1.add(140.0, 122);
+		series1.add(150.0, 120);
+
+		final XYSeries series2 = new XYSeries(mContext.getResources()
+				.getString(R.string.diastolic_value));
+		series2.add(10.0, 15000.3);
+		series2.add(20.0, 11000.4);
+		series2.add(30.0, 17000.3);
+		series2.add(40.0, 15000.3);
+		series2.add(50.0, 14000.4);
+		series2.add(60.0, 12000.3);
+		series2.add(70.0, 11000.5);
+		series2.add(80.0, 12000.3);
+		series2.add(90.0, 13000.4);
+		series2.add(100.0, 12000.6);
+		series2.add(110.0, 13000.3);
+		series2.add(120.0, 17000.2);
+		series2.add(130.0, 18000.2);
+		series2.add(140.0, 16000.2);
+		series2.add(150.0, 17000.2);
+
+		final XYSeriesCollection collection = new XYSeriesCollection();
+		collection.addSeries(series1);
+//		collection.addSeries(series2);
+		return collection;
+
+	}
+
+	/**
+	 * Creates a sample dataset.
+	 * 
+	 * @return Series 2.
+	 */
+	private XYDataset createAirPressureDataSet()
 	{
 
-		TimeSeries s1 = new TimeSeries("L&G European Index Trust");
-		s1.add(new Day(6, 6, 2001), 100);
-		s1.add(new Day(7, 6, 2001), 101);
-		s1.add(new Day(8, 6, 2001), 105);
-		s1.add(new Day(9, 6, 2001), 109);
-		s1.add(new Day(10, 6, 2001), 105);
-		// s1.add(new Month(2, 2001), 181.8);
-		// s1.add(new Month(3, 2001), 167.3);
-		// s1.add(new Month(4, 2001), 153.8);
-		// s1.add(new Month(5, 2001), 167.6);
-		// s1.add(new Month(6, 2001), 158.8);
-		// s1.add(new Month(7, 2001), 148.3);
-		// s1.add(new Month(8, 2001), 153.9);
-		// s1.add(new Month(9, 2001), 142.7);
-		// s1.add(new Month(10, 2001), 123.2);
-		// s1.add(new Month(11, 2001), 131.8);
-		// s1.add(new Month(12, 2001), 139.6);
-		// s1.add(new Month(1, 2002), 142.9);
-		// s1.add(new Month(2, 2002), 138.7);
-		// s1.add(new Month(3, 2002), 137.3);
-		// s1.add(new Month(4, 2002), 143.9);
-		// s1.add(new Month(5, 2002), 139.8);
-		// s1.add(new Month(6, 2002), 137.0);
-		// s1.add(new Month(7, 2002), 132.8);
+		// create dataset 2...
+		final XYSeries series2 = new XYSeries(mContext.getResources()
+				.getString(R.string.charts_sub_air));
 
-		// TimeSeries s2 = new TimeSeries("L&G UK Index Trust");
-		// s2.add(new Month(2, 2001), 129.6);
-		// s2.add(new Month(3, 2001), 123.2);
-		// s2.add(new Month(4, 2001), 117.2);
-		// s2.add(new Month(5, 2001), 124.1);
-		// s2.add(new Month(6, 2001), 122.6);
-		// s2.add(new Month(7, 2001), 119.2);
-		// s2.add(new Month(8, 2001), 116.5);
-		// s2.add(new Month(9, 2001), 112.7);
-		// s2.add(new Month(10, 2001), 101.5);
-		// s2.add(new Month(11, 2001), 106.1);
-		// s2.add(new Month(12, 2001), 110.3);
-		// s2.add(new Month(1, 2002), 111.7);
-		// s2.add(new Month(2, 2002), 111.0);
-		// s2.add(new Month(3, 2002), 109.6);
-		// s2.add(new Month(4, 2002), 113.2);
-		// s2.add(new Month(5, 2002), 111.6);
-		// s2.add(new Month(6, 2002), 108.8);
-		// s2.add(new Month(7, 2002), 101.6);
+		series2.add(10.0, 16853.2);
+		series2.add(20.0, 19642.3);
+		series2.add(30.0, 18253.5);
+		series2.add(40.0, 15352.3);
+		series2.add(50.0, 13532.0);
+		series2.add(100.0, 12635.3);
+		series2.add(110.0, 13998.2);
+		series2.add(120.0, 11943.2);
+		series2.add(130.0, 16943.9);
+		series2.add(140.0, 17843.2);
+		series2.add(150.0, 16495.3);
+		series2.add(160.0, 17943.6);
+		series2.add(170.0, 18500.7);
+		series2.add(180.0, 19595.9);
 
-		TimeSeriesCollection dataset = new TimeSeriesCollection();
-		dataset.addSeries(s1);
-		// dataset.addSeries(s2);
-
-		return dataset;
+		return new XYSeriesCollection(series2);
 
 	}
 }
