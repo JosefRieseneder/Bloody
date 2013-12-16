@@ -2,7 +2,9 @@ package at.fhooe.mhs.bloody;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import at.fhooe.mhs.bloody.charts.ChartsActivity;
 
 public class MainActivity extends Activity
 {
@@ -12,6 +14,9 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		Intent intent = new Intent(this, ChartsActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
