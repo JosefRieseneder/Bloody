@@ -1,29 +1,28 @@
 package at.fhooe.mhs.bloody.activities;
 
-import android.R.id;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
-import android.widget.ViewSwitcher;
+import android.widget.ViewFlipper;
 import at.fhooe.mhs.bloody.R;
+import at.fhooe.mhs.bloody.fragments.DateOfBirthFragment;
+import at.fhooe.mhs.bloody.fragments.GenderFragment;
 import at.fhooe.mhs.bloody.fragments.IDContactFragment;
+import at.fhooe.mhs.bloody.locationservice.GPSService;
 
 public class PersonalDataActivity extends Activity {
 
 	private enum State {
-		WELCOME, ID_CONTACT
+		WELCOME, ID_CONTACT, DATE_OF_BIRTH, GENDER
 	}
 
 	private State state;
-	private ViewSwitcher viewSwitcher;
+	private ViewFlipper viewFlipper;
 	private IDContactFragment idContactFragment;
+	private DateOfBirthFragment dateOfBirthFragment;
+	private GenderFragment genderFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +32,19 @@ public class PersonalDataActivity extends Activity {
 		initSwitcherAndViews();
 		initButtons();
 
+		System.out.println(GPSService.getInstance(this).hasValidLocation());
+		System.out.println(GPSService.getInstance(this).getLatitude() + ", "
+				+ GPSService.getInstance(this).getLongitude());
 	}
 
 	private void initSwitcherAndViews() {
-		viewSwitcher = (ViewSwitcher) findViewById(R.id.viewSwitcherPD);
+		viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipperPD);
 		idContactFragment = (IDContactFragment) getFragmentManager()
 				.findFragmentById(R.id.fragment_id_email);
+		dateOfBirthFragment = (DateOfBirthFragment) getFragmentManager()
+				.findFragmentById(R.id.fragment_date_of_birth);
+		genderFragment = (GenderFragment) getFragmentManager()
+				.findFragmentById(R.id.fragment_gender);
 	}
 
 	public void initButtons() {
@@ -56,17 +62,34 @@ public class PersonalDataActivity extends Activity {
 		switch (state) {
 		case WELCOME:
 			state = State.ID_CONTACT;
-			viewSwitcher.setDisplayedChild(1);
+			viewFlipper.setDisplayedChild(1);
 			break;
 		case ID_CONTACT:
-			if (idContactFragment.isFilled()) {
-				state = State.WELCOME;
-				viewSwitcher.setDisplayedChild(0);
-				(Toast.makeText(this, "Todo save to Personal Data", Toast.LENGTH_LONG)).show();
-			}else{
-				(Toast.makeText(this, "Enter values", Toast.LENGTH_LONG)).show();
-			}
+			//if (idContactFragment.isFilled()) {
+				state = State.DATE_OF_BIRTH;
+				viewFlipper.setDisplayedChild(2);
+//			} else {
+//				(Toast.makeText(this, "Enter values", Toast.LENGTH_LONG))
+//						.show();
+//			}
 			break;
+		case DATE_OF_BIRTH:
+		//	if (dateOfBirthFragment.isFilled()) {
+				state = State.GENDER;
+				viewFlipper.setDisplayedChild(3);
+			// } else {
+			// (Toast.makeText(this, "Enter values", Toast.LENGTH_LONG))
+			// .show();
+			// }
+			break;
+		case GENDER:
+			//if (genderFragment.isFilled()) {
+				state = State.WELCOME;
+				viewFlipper.setDisplayedChild(0);
+//			} else {
+//				(Toast.makeText(this, "Enter values", Toast.LENGTH_LONG))
+//						.show();
+//			}
 		}
 	}
 

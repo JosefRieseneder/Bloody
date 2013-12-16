@@ -20,11 +20,25 @@
     <string name="welcome_string">Welcome! Before you can log your blood pressure data, you have to enter some personal data</string>
     <string name="national_insurance_number">National Insurance Number</string>
     <string name="doctor_email">Doctors E-Mail</string>
+    <string name="date_of_birth">Enter your date of birth</string>
+    <string name="gender">Select your gender</string>
+    <string name="gender_male">male</string>
+    <string name="gender_female">female</string>
+    <string name="gender_other">other</string>
+    <string name="weight">Enter your weight</string>
+    <string name="unit_kg">kg</string>
+    <string name="unit_lbs">lbs</string>
+    <string name="measurement_time">I usually measure my blood pressure at</string>
+    <string name="address_text">Please enter your address where you usually measure your blood pressure</string>
+    <string name="use_gps_text">You can press the button to detect your address using GPS</string>
+    <string name="use_gps_button">Use GPS</string>
 
     <!-- measurement -->
     <string name="systolic_value">Systolic</string>
     <string name="diastolic_value">Diastolic</string>
     <string name="heartrate_value">Heartrate</string>
+    <string name="date_value">Date</string>
+    <string name="time_value">Time</string>
 
     <!-- health_status -->
     <string name="health_status">Helth Status</string>
