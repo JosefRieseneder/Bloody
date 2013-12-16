@@ -1,17 +1,19 @@
 package at.fhooe.mhs.bloody.activities;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import at.fhooe.mhs.bloody.R;
-import at.fhooe.mhs.bloody.personalData.PersonalData;
+import at.fhooe.mhs.bloody.locationservice.GPSService;
 
 public class MainActivity extends Activity
 {
+
+	private GPSService gps;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -19,6 +21,15 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initButtons();
+
+		gps = new GPSService(this);
+
+		if (!gps.canGetLocation()) {
+			// can't get location
+			// GPS or Network is not enabled
+			// Ask user to enable GPS/network in settings
+			gps.showSettingsAlert();
+		}
 	}
 
 	@Override
@@ -47,6 +58,4 @@ public class MainActivity extends Activity
 			}
 		});
 	}
-		
-
 }
