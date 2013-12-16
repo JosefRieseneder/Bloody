@@ -23,6 +23,15 @@ import android.util.Log;
  */
 public class GPSService extends Service implements LocationListener {
 
+	private static GPSService instance;
+
+	public static GPSService getInstance(Context context) {
+		if (instance == null) {
+			instance = new GPSService(context);
+		}
+		return instance;
+	}
+
 	private Context context;
 
 	private boolean isGPSEnabled;

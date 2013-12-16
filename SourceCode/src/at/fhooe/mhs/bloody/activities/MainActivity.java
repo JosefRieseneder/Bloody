@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.locationservice.GPSService;
 
@@ -22,13 +23,18 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 		initButtons();
 
-		gps = new GPSService(this);
+		gps = GPSService.getInstance(this);
 
 		if (!gps.canGetLocation()) {
 			// can't get location
 			// GPS or Network is not enabled
 			// Ask user to enable GPS/network in settings
 			gps.showSettingsAlert();
+		}
+		else if (gps.hasValidLocation()) {
+			Toast.makeText(getApplicationContext(),
+					"Your Location is - \nLat: " + gps.getLatitude()
+					+ "\nLong: " + gps.getLongitude(), Toast.LENGTH_LONG).show();   
 		}
 	}
 
