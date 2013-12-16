@@ -14,6 +14,7 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 import android.content.Context;
+import at.fhooe.mhs.bloody.personalData.PersonalData;
 
 /**
  * @author Patrick Hutflesz
@@ -84,9 +85,11 @@ public class MeasurementModel implements Serializable {
 	}
 
 	private ArrayList<Measurement> measurements;
+	private PersonalData personalData;
 
 	public MeasurementModel() {
 		measurements = new ArrayList<Measurement>();
+		personalData = new PersonalData();
 	}
 
 	public void addMeasurement(Measurement m) {
@@ -97,7 +100,18 @@ public class MeasurementModel implements Serializable {
 		return measurements.size();
 	}
 
-	public Measurement get(int index) {
+	public Measurement getMeasurement(int index) {
 		return measurements.get(index);
+	}
+
+	public PersonalData getPersonalData() {
+		return personalData;
+	}
+
+	public Measurement getLast() {
+		if (measurements.isEmpty()) {
+			return null;
+		}
+		return measurements.get(measurements.size() - 1);
 	}
 }

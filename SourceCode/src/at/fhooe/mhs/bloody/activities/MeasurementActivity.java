@@ -3,9 +3,7 @@
  */
 package at.fhooe.mhs.bloody.activities;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -14,17 +12,17 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.GetChars;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.fragments.NumberPickerDialog;
 import at.fhooe.mhs.bloody.fragments.NumberPickerListener;
+import at.fhooe.mhs.bloody.measurementdata.Measurement;
+import at.fhooe.mhs.bloody.measurementdata.MeasurementModel;
 import at.fhooe.mhs.bloody.utils.TextFieldInput;
 
 /**
@@ -37,10 +35,11 @@ public class MeasurementActivity extends Activity implements
 	private static String TAG = MeasurementActivity.class.getSimpleName();
 
 	private EditText etSystolic;
-	private EditText etAsystolic;
+	private EditText etDiastolic;
 	private EditText etHeartRate;
 	private EditText etDate;
 	private EditText etTime;
+	private MeasurementModel model;
 	
 	final Calendar calendar = Calendar.getInstance();
 
@@ -48,13 +47,12 @@ public class MeasurementActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_measurement);
+		model = MeasurementModel.getInstance(this);
 		// init variables
 		initGUIAndSetListener();
 	}
 
 	private void initGUIAndSetListener() {
-
-		
 		//---      systolic      ---
 		etSystolic = (EditText) findViewById(R.id.etSystolic);
 		etSystolic.setOnTouchListener(new View.OnTouchListener() {
@@ -69,34 +67,38 @@ public class MeasurementActivity extends Activity implements
 
 			@Override
 			public void onClick(View v) {
+				Measurement lastMeasurement = model.getLast();
+				int value = lastMeasurement != null ? lastMeasurement.getSystolic() : 120;
 				etSystolic.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
 				npd.doSettings(MeasurementActivity.this, R.id.etSystolic,
 						getResources().getString(R.string.systolic_value), 0,
-						250, 120);
+						250, value);
 				npd.show(getFragmentManager(), TAG);
 			}
 		});
 
-		//---      asystolic      ---
-		etAsystolic = (EditText) findViewById(R.id.etAsystolic);
-		etAsystolic.setOnTouchListener(new View.OnTouchListener() {
+		//---      diastolic      ---
+		etDiastolic = (EditText) findViewById(R.id.etDiastolic);
+		etDiastolic.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				etAsystolic.requestFocus();
+				etDiastolic.requestFocus();
 				return false;
 			}
 		});
-		etAsystolic.setOnClickListener(new View.OnClickListener() {
+		etDiastolic.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				etAsystolic.requestFocus();
+				Measurement lastMeasurement = model.getLast();
+				int value = lastMeasurement != null ? lastMeasurement.getDiastolic() : 80;
+				etDiastolic.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
-				npd.doSettings(MeasurementActivity.this, R.id.etAsystolic,
+				npd.doSettings(MeasurementActivity.this, R.id.etDiastolic,
 						getResources().getString(R.string.diastolic_value), 0,
-						250, 80);
+						250, value);
 				npd.show(getFragmentManager(), TAG);
 			}
 		});
@@ -115,11 +117,13 @@ public class MeasurementActivity extends Activity implements
 
 			@Override
 			public void onClick(View v) {
+				Measurement lastMeasurement = model.getLast();
+				int value = lastMeasurement != null ? lastMeasurement.getHeartRate() : 75;
 				etHeartRate.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
 				npd.doSettings(MeasurementActivity.this, R.id.etHeartRate,
 						getResources().getString(R.string.heartrate_value), 0,
-						250, 75);
+						250, value);
 				npd.show(getFragmentManager(), TAG);
 			}
 		});
