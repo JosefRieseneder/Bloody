@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ViewSwitcher
-                android:id="@+id/viewSwitcherPD"
+            <ViewFlipper
+                android:id="@+id/viewFlipperPD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5" >
@@ -35,7 +35,19 @@
                     android:name="at.fhooe.mhs.bloody.fragments.IDContactFragment"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
-            </ViewSwitcher>
+
+                <fragment
+                    android:id="@+id/fragment_date_of_birth"
+                    android:name="at.fhooe.mhs.bloody.fragments.DateOfBirthFragment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+                
+                <fragment
+                    android:id="@+id/fragment_gender"
+                    android:name="at.fhooe.mhs.bloody.fragments.GenderFragment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+            </ViewFlipper>
         </LinearLayout>
     </ScrollView>
 

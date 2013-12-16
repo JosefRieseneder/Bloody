@@ -20,10 +20,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.fragments.NumberPickerDialog;
 import at.fhooe.mhs.bloody.fragments.NumberPickerListener;
+import at.fhooe.mhs.bloody.utils.TextFieldInput;
 
 /**
  * @author Elisabeth
@@ -124,7 +126,7 @@ public class MeasurementActivity extends Activity implements
 
 		//---      date      ---
 		etDate = (EditText) findViewById(R.id.etDate);
-		setDateText(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		TextFieldInput.setDateText(etDate, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		etDate.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
@@ -153,7 +155,7 @@ public class MeasurementActivity extends Activity implements
 		
 		//---      time      ---
 		etTime = (EditText) findViewById(R.id.etTime);
-		setTimeText(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+		TextFieldInput.setTimeText(etTime,calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
 		etTime.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
@@ -213,7 +215,7 @@ public class MeasurementActivity extends Activity implements
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
-		setDateText(year, monthOfYear, dayOfMonth);
+		TextFieldInput.setDateText(etDate, year, monthOfYear, dayOfMonth);
 	}
 	
 	// --------------------------------------
@@ -221,23 +223,11 @@ public class MeasurementActivity extends Activity implements
 	// -------------------------------------
 	@Override
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-		setTimeText(hourOfDay, minute);
+		TextFieldInput.setTimeText(etTime, hourOfDay, minute);
 		
 	}
 	
-	private void setDateText(int year, int month, int day){
-		GregorianCalendar date = new GregorianCalendar(year, month, day);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-	    String dateString = sdf.format(date.getTime());
-		etDate.setText(dateString);
-	}
-	
-	private void setTimeText(int hour, int minute){
-		GregorianCalendar date = new GregorianCalendar(0, 0, 0, hour, minute, 0);
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-	    String dateString = sdf.format(date.getTime());
-		etTime.setText(dateString);
-	}
+
 
 
 
