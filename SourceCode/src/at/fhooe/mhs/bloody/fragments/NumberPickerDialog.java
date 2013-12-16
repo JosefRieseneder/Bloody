@@ -24,6 +24,7 @@ public class NumberPickerDialog extends DialogFragment implements
 	private int minValue;
 	private int maxValue;
 	private int curValue;
+	private String[] stringValues;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,11 @@ public class NumberPickerDialog extends DialogFragment implements
 		numberPicker.setMinValue(minValue);
 		numberPicker.setMaxValue(maxValue);
 		numberPicker.setValue(curValue);
+		
+		if(stringValues!=null){
+			numberPicker.setDisplayedValues(stringValues);
+		}
+		
 		numberPicker.setOnValueChangedListener(this);
 		
 		Button okButton = (Button)v.findViewById(R.id.dialog_nr_buttonOK);
@@ -70,9 +76,16 @@ public class NumberPickerDialog extends DialogFragment implements
 		this.maxValue = maxValue;
 		this.curValue = curValue;
 	}
+	
+	public void doSettings(NumberPickerListener listener, int id, String title,
+			int minValue, int maxValue, int curValue, String[] stringValues) {
+		doSettings(listener, id, title, minValue, maxValue, curValue);
+		this.stringValues = stringValues;
+	}
 
 	@Override
 	public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 		curValue = newVal;
 	}
+	
 }
