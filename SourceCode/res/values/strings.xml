@@ -28,6 +28,10 @@
     <string name="weight">Enter your weight</string>
     <string name="unit_kg">kg</string>
     <string name="unit_lbs">lbs</string>
+    <string name="height">Enter your height</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_ft">ft</string>
+    
     <string name="measurement_time">I usually measure my blood pressure at</string>
     <string name="address_text">Please enter your address where you usually measure your blood pressure</string>
     <string name="use_gps_text">You can press the button to detect your address using GPS</string>

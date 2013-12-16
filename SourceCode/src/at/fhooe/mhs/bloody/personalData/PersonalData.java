@@ -1,13 +1,36 @@
 package at.fhooe.mhs.bloody.personalData;
 
+import java.util.Date;
+
 public class PersonalData {
 
+	/**
+	 * User medical id = SozialversicherungsNr.
+	 */
 	private String id;
+	/**
+	 * Mail of doctor or a person that uses the blood pressuer data
+	 */
 	private String contactEmail;
+	
+	/**
+	 * Date of birth
+	 */
+	private Date dateOfBirth;
 	/**
 	 * Weight in kilograms.
 	 */
 	private int weight;
+	
+	/**
+	 * Height in cm
+	 */
+	private int height;
+	
+	/**
+	 * Gender of person
+	 */
+	private Gender gender;
 	/**
 	 * Age in years.
 	 */
@@ -20,7 +43,7 @@ public class PersonalData {
 	 * String representation of the location the user entered.
 	 */
 	private String location;
-	private Gender gender;
+	
 
 	public int getAge() {
 		return age;
@@ -77,4 +100,48 @@ public class PersonalData {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
+
+	/**
+	 * @return the dateOfBirth
+	 */
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	/**
+	 * @param dateOfBirth the dateOfBirth to set
+	 */
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public Gender getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+	
+	
 }

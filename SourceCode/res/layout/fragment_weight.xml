@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_weight="0.5"
+            android:editable="false"
             android:gravity="right"
             android:hint="75" >
         </EditText>
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_weight="0.5"
+            android:editable="false"
             android:gravity="left"
             android:hint="@string/unit_kg" >
         </EditText>

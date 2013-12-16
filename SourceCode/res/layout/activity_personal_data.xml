@@ -41,10 +41,28 @@
                     android:name="at.fhooe.mhs.bloody.fragments.DateOfBirthFragment"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
-                
+
                 <fragment
                     android:id="@+id/fragment_gender"
                     android:name="at.fhooe.mhs.bloody.fragments.GenderFragment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment
+                    android:id="@+id/fragment_weight"
+                    android:name="at.fhooe.mhs.bloody.fragments.WeightFragment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment
+                    android:id="@+id/fragment_height"
+                    android:name="at.fhooe.mhs.bloody.fragments.HeightFragment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment
+                    android:id="@+id/fragment_address"
+                    android:name="at.fhooe.mhs.bloody.fragments.AddressFragment"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
             </ViewFlipper>

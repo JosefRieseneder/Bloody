@@ -15,7 +15,7 @@ import at.fhooe.mhs.bloody.locationservice.GPSService;
 public class PersonalDataActivity extends Activity {
 
 	private enum State {
-		WELCOME, ID_CONTACT, DATE_OF_BIRTH, GENDER
+		WELCOME, ID_CONTACT, DATE_OF_BIRTH, GENDER, WEIGHT, HEIGHT, ADDRESS
 	}
 
 	private State state;
@@ -65,31 +65,38 @@ public class PersonalDataActivity extends Activity {
 			viewFlipper.setDisplayedChild(1);
 			break;
 		case ID_CONTACT:
-			//if (idContactFragment.isFilled()) {
-				state = State.DATE_OF_BIRTH;
-				viewFlipper.setDisplayedChild(2);
-//			} else {
-//				(Toast.makeText(this, "Enter values", Toast.LENGTH_LONG))
-//						.show();
-//			}
+			// if (idContactFragment.isFilled()) {
+			state = State.DATE_OF_BIRTH;
+			viewFlipper.setDisplayedChild(2);
+			// } else {
+			// (Toast.makeText(this, "Enter values", Toast.LENGTH_LONG))
+			// .show();
+			// }
 			break;
 		case DATE_OF_BIRTH:
-		//	if (dateOfBirthFragment.isFilled()) {
-				state = State.GENDER;
-				viewFlipper.setDisplayedChild(3);
+			// if (dateOfBirthFragment.isFilled()) {
+			state = State.GENDER;
+			viewFlipper.setDisplayedChild(3);
 			// } else {
 			// (Toast.makeText(this, "Enter values", Toast.LENGTH_LONG))
 			// .show();
 			// }
 			break;
 		case GENDER:
-			//if (genderFragment.isFilled()) {
-				state = State.WELCOME;
-				viewFlipper.setDisplayedChild(0);
-//			} else {
-//				(Toast.makeText(this, "Enter values", Toast.LENGTH_LONG))
-//						.show();
-//			}
+			state = State.WEIGHT;
+			viewFlipper.setDisplayedChild(4);
+			break;
+		case WEIGHT:
+			state = State.HEIGHT;
+			viewFlipper.setDisplayedChild(5);
+			break;
+		case HEIGHT:
+			state = State.ADDRESS;
+			viewFlipper.setDisplayedChild(6);
+			break;
+		case ADDRESS:
+			finish();
+			break;
 		}
 	}
 
