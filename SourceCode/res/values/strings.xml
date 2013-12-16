@@ -25,6 +25,8 @@
     <string name="systolic_value">Systolic</string>
     <string name="asystolic_value">Asystolic</string>
     <string name="heartrate_value">Heartrate</string>
+    <string name="date_value">Date</string>
+    <string name="time_value">Time</string>
 
     <!-- health_status -->
     <string name="health_status">Helth Status</string>
