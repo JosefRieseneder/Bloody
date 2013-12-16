@@ -10,6 +10,7 @@ import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.fragments.DateOfBirthFragment;
 import at.fhooe.mhs.bloody.fragments.GenderFragment;
 import at.fhooe.mhs.bloody.fragments.IDContactFragment;
+import at.fhooe.mhs.bloody.locationservice.GPSService;
 
 public class PersonalDataActivity extends Activity {
 
@@ -31,6 +32,9 @@ public class PersonalDataActivity extends Activity {
 		initSwitcherAndViews();
 		initButtons();
 
+		System.out.println(GPSService.getInstance(this).hasValidLocation());
+		System.out.println(GPSService.getInstance(this).getLatitude() + ", "
+				+ GPSService.getInstance(this).getLongitude());
 	}
 
 	private void initSwitcherAndViews() {
