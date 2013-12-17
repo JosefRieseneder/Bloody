@@ -244,6 +244,15 @@ public class MeasurementActivity extends Activity implements
 	public void onNumberChanged(int id, int value) {
 		EditText et = (EditText) findViewById(id);
 		et.setText("" + value);
+		if (id == R.id.etDiastolic) {
+			diastolic = value;
+		}
+		else if (id == R.id.etSystolic) {
+			systolic = value;
+		}
+		else if (id == R.id.etHeartRate) {
+			heartRate = value;
+		}
 	}
 
 	

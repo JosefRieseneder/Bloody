@@ -154,6 +154,7 @@ public class PersonalData implements Serializable  {
 		boolean locationLonValid = locationLon > 0;
 		boolean locationValid = location != null;
 		boolean ageValid = age > 0;
+		System.out.println(weightValid + ", " + heightValid + ", " + locationLatValid + ", " + locationLonValid + ", " + locationValid + ", " + ageValid);
 		return weightValid
 				&& heightValid
 				&& locationLatValid

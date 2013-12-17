@@ -35,6 +35,7 @@ public class HeightFragment extends Fragment implements NumberPickerListener {
 
 	private void initGUIAndSetListener(View v) {
 
+		height = 175;
 		etHeight = (EditText) v.findViewById(R.id.et_height_amount);
 
 		etHeight.setOnTouchListener(new View.OnTouchListener() {
@@ -52,7 +53,7 @@ public class HeightFragment extends Fragment implements NumberPickerListener {
 				etHeight.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
 				npd.doSettings(HeightFragment.this, R.id.et_height_amount,
-						getResources().getString(R.string.height), 0, 300, 175);
+						getResources().getString(R.string.height), 0, 300, height);
 				npd.show(getFragmentManager(), TAG);
 
 			}

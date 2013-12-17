@@ -48,6 +48,7 @@ public class WeightFragment extends Fragment implements NumberPickerListener {
 
 	private void initGUIAndSetListener(View v) {
 
+		weight = 75;
 		etWeight = (EditText) v.findViewById(R.id.et_weight_amount);
 
 		etWeight.setOnTouchListener(new View.OnTouchListener() {
@@ -65,7 +66,7 @@ public class WeightFragment extends Fragment implements NumberPickerListener {
 				etWeight.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
 				npd.doSettings(WeightFragment.this, R.id.et_weight_amount,
-						getResources().getString(R.string.weight), 0, 600, 75);
+						getResources().getString(R.string.weight), 0, 600, weight);
 				npd.show(getFragmentManager(), TAG);
 
 			}

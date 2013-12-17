@@ -1,7 +1,5 @@
 package at.fhooe.mhs.bloody.activities;
 
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +18,6 @@ import at.fhooe.mhs.bloody.fragments.IDContactFragment;
 import at.fhooe.mhs.bloody.fragments.WeightFragment;
 import at.fhooe.mhs.bloody.locationservice.GPSService;
 import at.fhooe.mhs.bloody.locationservice.GeoCoderService;
-import at.fhooe.mhs.bloody.measurementdata.Measurement;
 import at.fhooe.mhs.bloody.measurementdata.MeasurementModel;
 import at.fhooe.mhs.bloody.utils.AgeCalculator;
 
