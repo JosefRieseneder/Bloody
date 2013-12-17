@@ -1,9 +1,14 @@
 package at.fhooe.mhs.bloody.personalData;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PersonalData {
+public class PersonalData implements Serializable  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8483647724384199894L;
 	/**
 	 * User medical id = SozialversicherungsNr.
 	 */

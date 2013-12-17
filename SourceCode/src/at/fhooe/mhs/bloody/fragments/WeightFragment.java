@@ -77,6 +77,7 @@ public class WeightFragment extends Fragment implements NumberPickerListener {
 	public void onNumberChanged(int id, int value) {
 		EditText et = (EditText) getActivity().findViewById(id);
 		et.setText("" + value);
+		weight = value;
 	}
 
 	/**

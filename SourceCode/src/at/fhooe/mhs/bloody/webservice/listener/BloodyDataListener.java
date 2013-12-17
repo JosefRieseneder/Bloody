@@ -7,4 +7,6 @@ import at.fhooe.mhs.bloody.webservice.data.BloodyData;
 public interface BloodyDataListener {
 	
 	public void onBloodyDataReceived(List<BloodyData> bloodyData);
+	
+	public void onBloodyDataUploaded();
 }

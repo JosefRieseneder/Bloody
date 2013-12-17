@@ -64,6 +64,7 @@ public class HeightFragment extends Fragment implements NumberPickerListener {
 	public void onNumberChanged(int id, int value) {
 		EditText et = (EditText) getActivity().findViewById(id);
 		et.setText("" + value);
+		this.height = value;
 	}
 
 	/**
