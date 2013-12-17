@@ -33,7 +33,8 @@ public class HealthStatusActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_health_status);
-
+		initButtons();
+		
 		Measurement m = (Measurement) getIntent().getSerializableExtra(MeasurementActivity.EXTRA_MEAS);
 
 		String fileName = "healthevaluation.fcl";
