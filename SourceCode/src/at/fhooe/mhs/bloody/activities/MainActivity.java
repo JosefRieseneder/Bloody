@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.Toast;
 import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.locationservice.GPSService;
-import at.fhooe.mhs.bloody.charts.ChartsActivity;
-import at.fhooe.mhs.bloody.personalData.PersonalData;
 
 public class MainActivity extends Activity
 {

@@ -12,7 +12,6 @@
     <string name="next">Next</string>
 
     <!-- main activity -->
-
     <string name="bp_measurement">Blood Pressure Measurement</string>
     <string name="personal_data">Enter Personal Data</string>
 
@@ -31,6 +30,7 @@
     <string name="height">Enter your height</string>
     <string name="unit_cm">cm</string>
     <string name="unit_ft">ft</string>
+    <string name="enter_values">Enter Values</string>
     
     <string name="measurement_time">I usually measure my blood pressure at</string>
     <string name="address_text">Please enter your address where you usually measure your blood pressure</string>
