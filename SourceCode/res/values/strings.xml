@@ -7,7 +7,7 @@
 
     <!-- general -->
     <string name="save">Save</string>
-    <string name="cancle">Cancle</string>
+    <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="next">Next</string>
 
@@ -16,7 +16,7 @@
     <string name="personal_data">Enter Personal Data</string>
 
     <!-- wizard -->
-    <string name="welcome_string">Welcome! Before you can log your blood pressure data, you have to enter some personal data</string>
+    <string name="welcome_string">Welcome! Please enter some personal data before you start logging your blood pressure.</string>
     <string name="national_insurance_number">National Insurance Number</string>
     <string name="doctor_email">Doctors E-Mail</string>
     <string name="date_of_birth">Enter your date of birth</string>
@@ -43,14 +43,16 @@
     <string name="heartrate_value">Heartrate</string>
     <string name="date_value">Date</string>
     <string name="time_value">Time</string>
+    <string name="missing_pd_heading">Personal data missing!</string>
+    <string name="missing_pd_text">We still need some personal information to process the measurements.</string>
 
     <!-- health_status -->
-    <string name="health_status">Helth Status</string>
+    <string name="health_status">Health Status</string>
     <string name="share">Share</string>
-    <string name="timeline">Timeline</string>
+    <string name="timeline">History</string>
     
     <!-- charts -->
-    <string name="charts_title">Helth Status</string>
+    <string name="charts_title">Health Status</string>
     <string name="charts_sub_blood">Blood pressure</string>
     <string name="charts_sub_air">Air pressure</string>
 

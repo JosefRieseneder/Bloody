@@ -48,7 +48,6 @@ public class PersonalData implements Serializable  {
 	 * String representation of the location the user entered.
 	 */
 	private String location;
-	
 
 	public int getAge() {
 		return age;
@@ -147,6 +146,19 @@ public class PersonalData implements Serializable  {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	
-	
+
+	public boolean isValid() {
+		boolean weightValid = weight > 0;
+		boolean heightValid = height > 0;
+		boolean locationLatValid = locationLat > 0;
+		boolean locationLonValid = locationLon > 0;
+		boolean locationValid = location != null;
+		boolean ageValid = age > 0;
+		return weightValid
+				&& heightValid
+				&& locationLatValid
+				&& locationLonValid
+				&& locationValid
+				&& ageValid;
+	}
 }
