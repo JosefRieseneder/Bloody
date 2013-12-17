@@ -31,16 +31,20 @@ public class MainActivity extends Activity
 
 		gps = GPSService.getInstance(this);
 
-		if (!gps.canGetLocation()) {
+		if (!gps.canGetLocation())
+		{
 			// can't get location
 			// GPS or Network is not enabled
 			// Ask user to enable GPS/network in settings
 			gps.showSettingsAlert();
 		}
-		else if (gps.hasValidLocation()) {
-			Toast.makeText(getApplicationContext(),
-					"Your Location is " + gps.getLocationString() + " - \nLat: " + gps.getLatitude()
-					+ "\nLong: " + gps.getLongitude(), Toast.LENGTH_LONG).show();   
+		else if (gps.hasValidLocation())
+		{
+			Toast.makeText(
+					getApplicationContext(),
+					"Your Location is " + gps.getLocationString()
+							+ " - \nLat: " + gps.getLatitude() + "\nLong: "
+							+ gps.getLongitude(), Toast.LENGTH_LONG).show();
 		}
 	}
 

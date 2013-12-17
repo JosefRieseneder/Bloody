@@ -41,6 +41,9 @@
 
 package at.fhooe.mhs.bloody.charts;
 
+import java.util.Arrays;
+import java.util.Vector;
+
 import org.afree.chart.AFreeChart;
 import org.afree.chart.axis.AxisLocation;
 import org.afree.chart.axis.DateAxis;
@@ -65,6 +68,7 @@ public class BloodPressureChartView extends ChartView
 {
 
 	private Context mContext;
+	private Vector<Integer> mSystolicValues, mDiastolicValues;
 
 	/**
 	 * constructor
@@ -75,6 +79,21 @@ public class BloodPressureChartView extends ChartView
 	{
 		super(context);
 		mContext = context;
+
+		mSystolicValues = new Vector<Integer>();
+
+		Integer[] sysval = new Integer[]
+		{ 120, 123, 125, 122, 124, 128, 123, 118, 119, 118, 120, 121, 122, 122,
+				120 };
+
+		mSystolicValues.addAll(Arrays.asList(sysval));
+
+		mDiastolicValues = new Vector<Integer>();
+
+		Integer[] diaval = new Integer[]
+		{ 80, 83, 85, 82, 84, 88, 83, 78, 79, 78, 80, 81, 82, 82, 80 };
+
+		mDiastolicValues.addAll(Arrays.asList(diaval));
 
 		final AFreeChart chart = createCombinedChart();
 		// final AFreeChart chart = createChart(createDataset());
@@ -95,6 +114,7 @@ public class BloodPressureChartView extends ChartView
 
 		Font font = new Font("Axis", 0, 30);
 		bloodRangeAxis.setTickLabelFont(font);
+		bloodRangeAxis.setRange(0, 300);
 
 		bloodSubPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
 
@@ -116,7 +136,7 @@ public class BloodPressureChartView extends ChartView
 		// parent plot...
 		final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(
 				new DateAxis());
-		plot.setGap(10.0);
+		plot.setGap(20.0);
 
 		// add the subplots...
 		plot.add(bloodSubPlot, 1);
@@ -138,45 +158,45 @@ public class BloodPressureChartView extends ChartView
 	private XYDataset createBloodPressureDataSet()
 	{
 		// create dataset 1...
-		final XYSeries series1 = new XYSeries(mContext.getResources()
+		final XYSeries sysSeries = new XYSeries(mContext.getResources()
 				.getString(R.string.systolic_value));
-		series1.add(10.0, 120);
-		series1.add(20.0, 123);
-		series1.add(30.0, 125);
-		series1.add(40.0, 122);
-		series1.add(50.0, 124);
-		series1.add(60.0, 128);
-		series1.add(70.0, 123);
-		series1.add(80.0, 118);
-		series1.add(90.0, 119);
-		series1.add(100.0, 118);
-		series1.add(110.0, 120);
-		series1.add(120.0, 121);
-		series1.add(130.0, 122);
-		series1.add(140.0, 122);
-		series1.add(150.0, 120);
+		sysSeries.add(10.0, 120);
+		sysSeries.add(20.0, 123);
+		sysSeries.add(30.0, 125);
+		sysSeries.add(40.0, 122);
+		sysSeries.add(50.0, 124);
+		sysSeries.add(60.0, 128);
+		sysSeries.add(70.0, 123);
+		sysSeries.add(80.0, 118);
+		sysSeries.add(90.0, 119);
+		sysSeries.add(100.0, 118);
+		sysSeries.add(110.0, 120);
+		sysSeries.add(120.0, 121);
+		sysSeries.add(130.0, 122);
+		sysSeries.add(140.0, 122);
+		sysSeries.add(150.0, 120);
 
-		final XYSeries series2 = new XYSeries(mContext.getResources()
+		final XYSeries diaSeries = new XYSeries(mContext.getResources()
 				.getString(R.string.diastolic_value));
-		series2.add(10.0, 15000.3);
-		series2.add(20.0, 11000.4);
-		series2.add(30.0, 17000.3);
-		series2.add(40.0, 15000.3);
-		series2.add(50.0, 14000.4);
-		series2.add(60.0, 12000.3);
-		series2.add(70.0, 11000.5);
-		series2.add(80.0, 12000.3);
-		series2.add(90.0, 13000.4);
-		series2.add(100.0, 12000.6);
-		series2.add(110.0, 13000.3);
-		series2.add(120.0, 17000.2);
-		series2.add(130.0, 18000.2);
-		series2.add(140.0, 16000.2);
-		series2.add(150.0, 17000.2);
+		diaSeries.add(10.0, 80);
+		diaSeries.add(20.0, 83);
+		diaSeries.add(30.0, 85);
+		diaSeries.add(40.0, 82);
+		diaSeries.add(50.0, 84);
+		diaSeries.add(60.0, 88);
+		diaSeries.add(70.0, 83);
+		diaSeries.add(80.0, 78);
+		diaSeries.add(90.0, 79);
+		diaSeries.add(100.0, 78);
+		diaSeries.add(110.0, 80);
+		diaSeries.add(120.0, 81);
+		diaSeries.add(130.0, 82);
+		diaSeries.add(140.0, 82);
+		diaSeries.add(150.0, 80);
 
 		final XYSeriesCollection collection = new XYSeriesCollection();
-		collection.addSeries(series1);
-//		collection.addSeries(series2);
+		collection.addSeries(sysSeries);
+		collection.addSeries(diaSeries);
 		return collection;
 
 	}
