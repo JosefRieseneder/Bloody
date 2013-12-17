@@ -3,8 +3,8 @@ package at.fhooe.mhs.bloody.webservice.service;
 import java.util.List;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import at.fhooe.mhs.bloody.webservice.data.BloodyData;
+import at.fhooe.mhs.bloody.webservice.listener.BloodyDataListener;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -12,6 +12,8 @@ import com.google.gson.reflect.TypeToken;
 
 public class DownloadBloodyDataTask extends
 		AsyncTask<Void, Void, List<BloodyData>> {
+
+	private BloodyDataListener bloodyDataListener;
 
 	@Override
 	protected List<BloodyData> doInBackground(Void... params) {
@@ -32,9 +34,10 @@ public class DownloadBloodyDataTask extends
 	protected void onPostExecute(List<BloodyData> bloodyData) {
 		super.onPostExecute(bloodyData);
 
-		// TODO: forward data
-		for (BloodyData data : bloodyData) {
-			Log.i("Bloody Server Data",data.toString());
-		}
+		bloodyDataListener.onBloodyDataReceived(bloodyData);
+	}
+
+	public void setBloodyDataListener(BloodyDataListener bloodyDataListener) {
+		this.bloodyDataListener = bloodyDataListener;
 	}
 }

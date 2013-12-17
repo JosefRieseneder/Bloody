@@ -24,7 +24,7 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Intent intent = new Intent(this, ChartsActivity.class);
+		Intent intent = new Intent(this, MapActivity.class);
 		startActivity(intent);
 
 		initButtons();
