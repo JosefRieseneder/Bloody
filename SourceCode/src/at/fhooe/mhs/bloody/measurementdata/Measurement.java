@@ -5,6 +5,8 @@ package at.fhooe.mhs.bloody.measurementdata;
 
 import java.io.Serializable;
 
+import com.survivingwithandroid.weatherapp.model.Weather;
+
 /**
  * @author Patrick Hutflesz
  * 
@@ -28,9 +30,11 @@ public class Measurement implements Serializable {
 	private String location;
 	private int age;
 
-	public Measurement(int heartRate, int systolic, int diastolic,
-			int weight, int height, double latitude, double longitude,
-			String location, int age) {
+	private Weather weather;
+
+	public Measurement(int heartRate, int systolic, int diastolic, int weight,
+			int height, double latitude, double longitude, String location,
+			int age, Weather weather) {
 		this.heartRate = heartRate;
 		this.systolic = systolic;
 		this.diastolic = diastolic;
@@ -40,6 +44,7 @@ public class Measurement implements Serializable {
 		this.longitude = longitude;
 		this.location = location;
 		this.age = age;
+		this.weather = weather;
 	}
 
 	public int getDiastolic() {
@@ -79,5 +84,9 @@ public class Measurement implements Serializable {
 
 	public int getAge() {
 		return age;
+	}
+
+	public Weather getWeather() {
+		return weather;
 	}
 }
