@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import at.fhooe.mhs.bloody.R;
 import at.fhooe.mhs.bloody.locationservice.GPSService;
+import at.fhooe.mhs.bloody.measurementdata.MeasurementModel;
 
 public class MainActivity extends Activity {
 
@@ -21,6 +22,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		initButtons();
+		
+	
 
 		gps = GPSService.getInstance(this);
 
@@ -36,6 +39,16 @@ public class MainActivity extends Activity {
 							+ " - \nLat: " + gps.getLatitude() + "\nLong: "
 							+ gps.getLongitude(), Toast.LENGTH_LONG).show();
 		}
+		
+		startPersonalizationWizardIfNecessary();
+	}
+
+	private void startPersonalizationWizardIfNecessary() {
+		String id = MeasurementModel.getInstance(this).getPersonalData().getId();
+		if(id==null || id.equals("")){
+			startActivity(new Intent(this, PersonalDataActivity.class));
+		}
+		
 	}
 
 	@Override

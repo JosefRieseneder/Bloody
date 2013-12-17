@@ -172,6 +172,8 @@ public class PersonalDataActivity extends Activity {
 		measModel.getPersonalData().setLocationLat(latLong[0]);
 		measModel.getPersonalData().setLocationLon(latLong[1]);
 		
+		MeasurementModel.save(this, measModel);
+		
 	}
 
 }
