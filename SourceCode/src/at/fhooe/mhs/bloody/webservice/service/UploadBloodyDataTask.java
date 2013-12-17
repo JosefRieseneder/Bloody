@@ -26,7 +26,9 @@ public class UploadBloodyDataTask extends
 	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
 
-		bloodyDataListener.onBloodyDataUploaded();
+		if (bloodyDataListener != null) {
+			bloodyDataListener.onBloodyDataUploaded();
+		}
 	}
 
 	public void setBloodyDataListener(BloodyDataListener bloodyDataListener) {

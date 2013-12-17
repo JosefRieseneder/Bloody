@@ -27,9 +27,9 @@
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/smiley" />
+                android:src="@drawable/status_normal" />
 
             <Button
                 android:id="@+id/button_share"

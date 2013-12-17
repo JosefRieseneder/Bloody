@@ -9,10 +9,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import at.fhooe.mhs.bloody.R;
+import at.fhooe.mhs.bloody.locationservice.GPSListener;
 import at.fhooe.mhs.bloody.locationservice.GPSService;
 import at.fhooe.mhs.bloody.measurementdata.MeasurementModel;
+import at.fhooe.mhs.bloody.personalData.PersonalData;
+import at.fhooe.mhs.bloody.weather.data.WeatherData;
+import at.fhooe.mhs.bloody.weather.listener.WeatherListener;
 
-public class MainActivity extends Activity {
+import com.survivingwithandroid.weatherapp.JSONWeatherTask;
+import com.survivingwithandroid.weatherapp.model.Weather;
+
+public class MainActivity extends Activity implements GPSListener,
+		WeatherListener {
 
 	private GPSService gps;
 
@@ -22,10 +30,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		initButtons();
-		
-	
 
 		gps = GPSService.getInstance(this);
+		gps.setGPSListener(this);
 
 		if (!gps.canGetLocation()) {
 			// can't get location
@@ -39,16 +46,17 @@ public class MainActivity extends Activity {
 							+ " - \nLat: " + gps.getLatitude() + "\nLong: "
 							+ gps.getLongitude(), Toast.LENGTH_LONG).show();
 		}
-		
+
 		startPersonalizationWizardIfNecessary();
 	}
 
 	private void startPersonalizationWizardIfNecessary() {
-		String id = MeasurementModel.getInstance(this).getPersonalData().getId();
-		if(id==null || id.equals("")){
+		String id = MeasurementModel.getInstance(this).getPersonalData()
+				.getId();
+		if (id == null || id.equals("")) {
 			startActivity(new Intent(this, PersonalDataActivity.class));
 		}
-		
+
 	}
 
 	@Override
@@ -79,5 +87,43 @@ public class MainActivity extends Activity {
 								PersonalDataActivity.class));
 					}
 				});
+	}
+
+	@Override
+	public void onLocationReceived(boolean newPosition, double latitude,
+			double longitude) {
+		if (!newPosition) {
+			PersonalData pd = MeasurementModel.getInstance(this)
+					.getPersonalData();
+			if (pd.getId() != null && !pd.getId().equals("")) {
+				getWeather(pd.getLocationLat(), pd.getLocationLon());
+			}
+		} else {
+			getWeather(latitude, longitude);
+		}
+	}
+
+	@Override
+	public void onPersonalLocationReceived(double _latitude, double _longitude) {
+		if (WeatherData.getInstance().getWeather() == null) {
+			PersonalData pd = MeasurementModel.getInstance(this)
+					.getPersonalData();
+			if (pd.getId() != null && !pd.getId().equals("")) {
+				getWeather(pd.getLocationLat(), pd.getLocationLon());
+			}
+		}
+	}
+
+	private void getWeather(double latitude, double longitude) {
+		JSONWeatherTask task = new JSONWeatherTask();
+		task.setWeatherListener(this);
+		task.execute(new Double[] { latitude, longitude });
+	}
+
+	@Override
+	public void onWeatherReceived(Weather weather) {
+		if (weather != null) {
+			WeatherData.getInstance().setWeather(weather);
+		}
 	}
 }

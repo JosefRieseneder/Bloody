@@ -27,6 +27,7 @@ import at.fhooe.mhs.bloody.measurementdata.Measurement;
 import at.fhooe.mhs.bloody.measurementdata.MeasurementModel;
 import at.fhooe.mhs.bloody.personalData.PersonalData;
 import at.fhooe.mhs.bloody.utils.TextFieldInput;
+import at.fhooe.mhs.bloody.weather.data.WeatherData;
 
 /**
  * @author Elisabeth
@@ -44,7 +45,7 @@ public class MeasurementActivity extends Activity implements
 	private EditText etDate;
 	private EditText etTime;
 	private MeasurementModel model;
-	
+
 	final Calendar calendar = Calendar.getInstance();
 
 	private int systolic, diastolic, heartRate;
@@ -59,7 +60,7 @@ public class MeasurementActivity extends Activity implements
 	}
 
 	private void initGUIAndSetListener() {
-		//---      systolic      ---
+		// --- systolic ---
 		etSystolic = (EditText) findViewById(R.id.etSystolic);
 		etSystolic.setOnTouchListener(new View.OnTouchListener() {
 
@@ -74,7 +75,8 @@ public class MeasurementActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				Measurement lastMeasurement = model.getLast();
-				int value = lastMeasurement != null ? lastMeasurement.getSystolic() : 120;
+				int value = lastMeasurement != null ? lastMeasurement
+						.getSystolic() : 120;
 				etSystolic.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
 				npd.doSettings(MeasurementActivity.this, R.id.etSystolic,
@@ -84,7 +86,7 @@ public class MeasurementActivity extends Activity implements
 			}
 		});
 
-		//---      diastolic      ---
+		// --- diastolic ---
 		etDiastolic = (EditText) findViewById(R.id.etDiastolic);
 		etDiastolic.setOnTouchListener(new View.OnTouchListener() {
 
@@ -99,7 +101,8 @@ public class MeasurementActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				Measurement lastMeasurement = model.getLast();
-				int value = lastMeasurement != null ? lastMeasurement.getDiastolic() : 80;
+				int value = lastMeasurement != null ? lastMeasurement
+						.getDiastolic() : 80;
 				etDiastolic.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
 				npd.doSettings(MeasurementActivity.this, R.id.etDiastolic,
@@ -109,7 +112,7 @@ public class MeasurementActivity extends Activity implements
 			}
 		});
 
-		//---      heartrate      ---
+		// --- heartrate ---
 		etHeartRate = (EditText) findViewById(R.id.etHeartRate);
 		etHeartRate.setOnTouchListener(new View.OnTouchListener() {
 
@@ -124,7 +127,8 @@ public class MeasurementActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				Measurement lastMeasurement = model.getLast();
-				int value = lastMeasurement != null ? lastMeasurement.getHeartRate() : 75;
+				int value = lastMeasurement != null ? lastMeasurement
+						.getHeartRate() : 75;
 				etHeartRate.requestFocus();
 				NumberPickerDialog npd = new NumberPickerDialog();
 				npd.doSettings(MeasurementActivity.this, R.id.etHeartRate,
@@ -134,9 +138,11 @@ public class MeasurementActivity extends Activity implements
 			}
 		});
 
-		//---      date      ---
+		// --- date ---
 		etDate = (EditText) findViewById(R.id.etDate);
-		TextFieldInput.setDateText(etDate, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		TextFieldInput.setDateText(etDate, calendar.get(Calendar.YEAR),
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
 		etDate.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
@@ -151,7 +157,6 @@ public class MeasurementActivity extends Activity implements
 			public void onClick(View v) {
 				etDate.requestFocus();
 
-				
 				int year = calendar.get(Calendar.YEAR);
 				int month = calendar.get(Calendar.MONTH);
 				int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -162,10 +167,11 @@ public class MeasurementActivity extends Activity implements
 
 			}
 		});
-		
-		//---      time      ---
+
+		// --- time ---
 		etTime = (EditText) findViewById(R.id.etTime);
-		TextFieldInput.setTimeText(etTime,calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+		TextFieldInput.setTimeText(etTime, calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE));
 		etTime.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
@@ -179,10 +185,12 @@ public class MeasurementActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				etTime.requestFocus();
-				
+
 				int hour = calendar.get(Calendar.HOUR_OF_DAY);
 				int minute = calendar.get(Calendar.MINUTE);
-				TimePickerDialog tpd = new TimePickerDialog(MeasurementActivity.this, MeasurementActivity.this, hour, minute, true);
+				TimePickerDialog tpd = new TimePickerDialog(
+						MeasurementActivity.this, MeasurementActivity.this,
+						hour, minute, true);
 				tpd.show();
 			}
 		});
@@ -197,33 +205,38 @@ public class MeasurementActivity extends Activity implements
 			public void onClick(View v) {
 				if (model.getPersonalData().isValid()) {
 					PersonalData pd = model.getPersonalData();
-					Measurement m = new Measurement(heartRate,
-							systolic, diastolic,
-							pd.getWeight(), pd.getHeight(),
-							pd.getLocationLat(), pd.getLocationLon(),
-							pd.getLocation(), pd.getAge());
+					Measurement m = new Measurement(heartRate, systolic,
+							diastolic, pd.getWeight(), pd.getHeight(), pd
+									.getLocationLat(), pd.getLocationLon(), pd
+									.getLocation(), pd.getAge(), WeatherData
+									.getInstance().getWeather());
 					model.addMeasurement(m);
+
 					Intent i = new Intent(MeasurementActivity.this,
 							HealthStatusActivity.class);
 					i.putExtra(EXTRA_MEAS, m);
 					startActivity(i);
-				}
-				else {
-					AlertDialog.Builder builder = new AlertDialog.Builder(MeasurementActivity.this);
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							MeasurementActivity.this);
 					builder.setTitle(R.string.missing_pd_heading)
 							.setMessage(R.string.missing_pd_text)
 							.setPositiveButton(R.string.ok,
 									new DialogInterface.OnClickListener() {
-										public void onClick(DialogInterface dialog, int id) {
-											startActivity(new Intent(MeasurementActivity.this,
+										public void onClick(
+												DialogInterface dialog, int id) {
+											startActivity(new Intent(
+													MeasurementActivity.this,
 													PersonalDataActivity.class));
 										}
 									})
 							.setNegativeButton(R.string.cancel,
 									new DialogInterface.OnClickListener() {
-										public void onClick(DialogInterface dialog, int id) {}
+										public void onClick(
+												DialogInterface dialog, int id) {
+										}
 									});
-			        builder.create().show();
+					builder.create().show();
 				}
 			}
 		});
@@ -255,7 +268,6 @@ public class MeasurementActivity extends Activity implements
 		}
 	}
 
-	
 	// --------------------------------------
 	// date Picker Listener
 	// -------------------------------------
@@ -264,18 +276,13 @@ public class MeasurementActivity extends Activity implements
 			int dayOfMonth) {
 		TextFieldInput.setDateText(etDate, year, monthOfYear, dayOfMonth);
 	}
-	
+
 	// --------------------------------------
 	// time Picker Listener
 	// -------------------------------------
 	@Override
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 		TextFieldInput.setTimeText(etTime, hourOfDay, minute);
-		
+
 	}
-	
-
-
-
-
 }

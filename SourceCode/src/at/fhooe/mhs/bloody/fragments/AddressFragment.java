@@ -42,7 +42,6 @@ public class AddressFragment extends Fragment implements NumberPickerListener {
 	private String address;
 	private Button btGPS;
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class AddressFragment extends Fragment implements NumberPickerListener {
 	}
 
 	public boolean isFilled() {
-		return !etAdress.equals("");
+		return address != null && !address.equals("");
 	}
 
 	private void initGUIAndSetListener(View v) {
@@ -100,10 +99,9 @@ public class AddressFragment extends Fragment implements NumberPickerListener {
 			// Ask user to enable GPS/network in settings
 			gps.showSettingsAlert();
 		} else if (gps.hasValidLocation()) {
-			address = GeoCoderService.getCompleteAddressString(
-					getActivity(), gps.getLatitude(), gps.getLongitude());
+			address = GeoCoderService.getCompleteAddressString(getActivity(),
+					gps.getLatitude(), gps.getLongitude());
 			etAdress.setText(address);
-
 		}
 
 	}
@@ -116,15 +114,11 @@ public class AddressFragment extends Fragment implements NumberPickerListener {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address
+	 *            the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	
-	
-	
-	
 
 }

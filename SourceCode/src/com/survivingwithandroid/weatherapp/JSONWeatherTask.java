@@ -23,14 +23,14 @@ import com.survivingwithandroid.weatherapp.model.Weather;
  * limitations under the License.
  */
 
-public class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
+public class JSONWeatherTask extends AsyncTask<Double, Void, Weather> {
 
 	private WeatherListener weatherListener;
 	
 	@Override
-	protected Weather doInBackground(String... params) {
+	protected Weather doInBackground(Double... params) {
 		Weather weather = new Weather();
-		String data = ((new WeatherHttpClient()).getWeatherData(params[0]));
+		String data = ((new WeatherHttpClient()).getWeatherData(params[0], params[1]));
 
 		try {
 			weather = JSONWeatherParser.getWeather(data);

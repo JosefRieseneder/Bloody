@@ -34,7 +34,9 @@ public class DownloadBloodyDataTask extends
 	protected void onPostExecute(List<BloodyData> bloodyData) {
 		super.onPostExecute(bloodyData);
 
-		bloodyDataListener.onBloodyDataReceived(bloodyData);
+		if (bloodyDataListener != null) {
+			bloodyDataListener.onBloodyDataReceived(bloodyData);
+		}
 	}
 
 	public void setBloodyDataListener(BloodyDataListener bloodyDataListener) {
