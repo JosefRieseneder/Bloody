@@ -57,7 +57,7 @@ public class MapActivity extends Activity implements BloodyDataListener {
 			UploadBloodyDataTask upTask = new UploadBloodyDataTask();
 			upTask.setBloodyDataListener(this);
 			upTask.execute(bloodyData);
-		}else{
+		} else {
 			// no measurement, just download others
 			onBloodyDataUploaded();
 		}
@@ -117,10 +117,20 @@ public class MapActivity extends Activity implements BloodyDataListener {
 					.position(
 							new LatLng(data.getLocationLat(), data
 									.getLocationLon()))
-					.title("Blood pressure: "
-							+ data.getBloodPressureDiastolic() + " / "
-							+ data.getBloodPressureSystolic())
-					.snippet("Heart rate: " + data.getHeartRate())
+					.title(getResources().getString(R.string.bp_measurement))
+					.snippet(
+							getResources().getString(R.string.heartrate_value)
+									+ ": "
+									+ data.getBloodPressureDiastolic()
+									+ "\n"
+									+ getResources().getString(
+											R.string.heartrate_value)
+									+ ": "
+									+ data.getBloodPressureSystolic()
+									+ "\n"
+									+ getResources().getString(
+											R.string.heartrate_value) + ": "
+									+ data.getHeartRate())
 					.icon(BitmapDescriptorFactory
 							.fromBitmap(createDrawableFromView(this, marker))));
 		}
