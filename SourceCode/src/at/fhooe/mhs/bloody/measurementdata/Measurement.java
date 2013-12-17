@@ -3,11 +3,13 @@
  */
 package at.fhooe.mhs.bloody.measurementdata;
 
+import java.io.Serializable;
+
 /**
  * @author Patrick Hutflesz
  * 
  */
-public class Measurement {
+public class Measurement implements Serializable {
 
 	/**
 	 * Heart rate measurement in bpm
