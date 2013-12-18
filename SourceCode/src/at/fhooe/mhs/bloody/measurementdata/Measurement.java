@@ -3,17 +3,24 @@
  */
 package at.fhooe.mhs.bloody.measurementdata;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import com.survivingwithandroid.weatherapp.model.Weather;
+
 /**
  * @author Patrick Hutflesz
  * 
  */
-public class Measurement {
+public class Measurement implements Serializable
+{
 
 	/**
 	 * Heart rate measurement in bpm
 	 */
 	private int heartRate;
 	private int systolic, diastolic;
+	private String date;
 	/**
 	 * Weight in kg.
 	 */
@@ -26,9 +33,12 @@ public class Measurement {
 	private String location;
 	private int age;
 
-	public Measurement(int heartRate, int systolic, int diastolic,
-			int weight, int height, double latitude, double longitude,
-			String location, int age) {
+	private Weather weather;
+
+	public Measurement(int heartRate, int systolic, int diastolic, int weight,
+			int height, double latitude, double longitude, String location,
+			int age, Weather weather, String date)
+	{
 		this.heartRate = heartRate;
 		this.systolic = systolic;
 		this.diastolic = diastolic;
@@ -38,44 +48,67 @@ public class Measurement {
 		this.longitude = longitude;
 		this.location = location;
 		this.age = age;
+		this.weather = weather;
+		this.date = date;
 	}
 
-	public int getDiastolic() {
+	public int getDiastolic()
+	{
 		return diastolic;
 	}
 
-	public int getSystolic() {
+	public int getSystolic()
+	{
 		return systolic;
 	}
 
 	/**
 	 * @return the heart rate in beats per minute.
 	 */
-	public int getHeartRate() {
+	public int getHeartRate()
+	{
 		return heartRate;
 	}
 
-	public int getHeight() {
+	public int getHeight()
+	{
 		return height;
 	}
 
-	public double getLatitude() {
+	public double getLatitude()
+	{
 		return latitude;
 	}
 
-	public double getLongitude() {
+	public double getLongitude()
+	{
 		return longitude;
 	}
 
-	public String getLocation() {
+	public String getLocation()
+	{
 		return location;
 	}
 
-	public int getWeight() {
+	public int getWeight()
+	{
 		return weight;
 	}
 
-	public int getAge() {
+	public int getAge()
+	{
 		return age;
 	}
+
+	public Weather getWeather()
+	{
+		return weather;
+	}
+
+	public String getDate()
+	{
+		return date;
+	}
+	
+	
 }

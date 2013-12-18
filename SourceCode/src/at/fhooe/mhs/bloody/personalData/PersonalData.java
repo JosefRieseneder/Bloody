@@ -1,9 +1,14 @@
 package at.fhooe.mhs.bloody.personalData;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PersonalData {
+public class PersonalData implements Serializable  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8483647724384199894L;
 	/**
 	 * User medical id = SozialversicherungsNr.
 	 */
@@ -43,7 +48,6 @@ public class PersonalData {
 	 * String representation of the location the user entered.
 	 */
 	private String location;
-	
 
 	public int getAge() {
 		return age;
@@ -142,6 +146,20 @@ public class PersonalData {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	
-	
+
+	public boolean isValid() {
+		boolean weightValid = weight > 0;
+		boolean heightValid = height > 0;
+		boolean locationLatValid = locationLat > 0;
+		boolean locationLonValid = locationLon > 0;
+		boolean locationValid = location != null;
+		boolean ageValid = age > 0;
+		System.out.println(weightValid + ", " + heightValid + ", " + locationLatValid + ", " + locationLonValid + ", " + locationValid + ", " + ageValid);
+		return weightValid
+				&& heightValid
+				&& locationLatValid
+				&& locationLonValid
+				&& locationValid
+				&& ageValid;
+	}
 }

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="left"
-        android:hint="ddmmyy1234" >
+        android:hint="1234ddmmyy" >
     </EditText>
 
     <TextView

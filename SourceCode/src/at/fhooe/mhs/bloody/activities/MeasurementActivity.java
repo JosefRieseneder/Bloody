@@ -6,10 +6,12 @@ package at.fhooe.mhs.bloody.activities;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -23,7 +25,9 @@ import at.fhooe.mhs.bloody.fragments.NumberPickerDialog;
 import at.fhooe.mhs.bloody.fragments.NumberPickerListener;
 import at.fhooe.mhs.bloody.measurementdata.Measurement;
 import at.fhooe.mhs.bloody.measurementdata.MeasurementModel;
+import at.fhooe.mhs.bloody.personalData.PersonalData;
 import at.fhooe.mhs.bloody.utils.TextFieldInput;
+import at.fhooe.mhs.bloody.weather.data.WeatherData;
 
 /**
  * @author Elisabeth
@@ -34,6 +38,7 @@ public class MeasurementActivity extends Activity implements
 {
 
 	private static String TAG = MeasurementActivity.class.getSimpleName();
+	public static final String EXTRA_MEAS = "EXTRA_MEAS";
 
 	private EditText etSystolic;
 	private EditText etDiastolic;
@@ -43,6 +48,8 @@ public class MeasurementActivity extends Activity implements
 	private MeasurementModel model;
 
 	final Calendar calendar = Calendar.getInstance();
+
+	private int systolic, diastolic, heartRate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -213,7 +220,7 @@ public class MeasurementActivity extends Activity implements
 
 		// Buttons
 		Button save = (Button) findViewById(R.id.buttonMeasurementSave);
-		Button cancle = (Button) findViewById(R.id.buttonMeasurementCancle);
+		Button cancel = (Button) findViewById(R.id.buttonMeasurementCancel);
 
 		save.setOnClickListener(new View.OnClickListener()
 		{
@@ -221,12 +228,52 @@ public class MeasurementActivity extends Activity implements
 			@Override
 			public void onClick(View v)
 			{
-				startActivity(new Intent(MeasurementActivity.this,
-						HealthStatusActivity.class));
+				if (model.getPersonalData().isValid())
+				{
+					PersonalData pd = model.getPersonalData();
+					Measurement m = new Measurement(heartRate, systolic,
+							diastolic, pd.getWeight(), pd.getHeight(), pd
+									.getLocationLat(), pd.getLocationLon(), pd
+									.getLocation(), pd.getAge(), WeatherData
+									.getInstance().getWeather(), etDate.getText().toString());
+					model.addMeasurement(m);
+
+					Intent i = new Intent(MeasurementActivity.this,
+							HealthStatusActivity.class);
+					i.putExtra(EXTRA_MEAS, m);
+					startActivity(i);
+				}
+				else
+				{
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							MeasurementActivity.this);
+					builder.setTitle(R.string.missing_pd_heading)
+							.setMessage(R.string.missing_pd_text)
+							.setPositiveButton(R.string.ok,
+									new DialogInterface.OnClickListener()
+									{
+										public void onClick(
+												DialogInterface dialog, int id)
+										{
+											startActivity(new Intent(
+													MeasurementActivity.this,
+													PersonalDataActivity.class));
+										}
+									})
+							.setNegativeButton(R.string.cancel,
+									new DialogInterface.OnClickListener()
+									{
+										public void onClick(
+												DialogInterface dialog, int id)
+										{
+										}
+									});
+					builder.create().show();
+				}
 			}
 		});
 
-		cancle.setOnClickListener(new View.OnClickListener()
+		cancel.setOnClickListener(new View.OnClickListener()
 		{
 
 			@Override
@@ -245,6 +292,18 @@ public class MeasurementActivity extends Activity implements
 	{
 		EditText et = (EditText) findViewById(id);
 		et.setText("" + value);
+		if (id == R.id.etDiastolic)
+		{
+			diastolic = value;
+		}
+		else if (id == R.id.etSystolic)
+		{
+			systolic = value;
+		}
+		else if (id == R.id.etHeartRate)
+		{
+			heartRate = value;
+		}
 	}
 
 	// --------------------------------------
@@ -266,5 +325,4 @@ public class MeasurementActivity extends Activity implements
 		TextFieldInput.setTimeText(etTime, hourOfDay, minute);
 
 	}
-
 }

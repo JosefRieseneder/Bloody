@@ -38,6 +38,7 @@ public class GPSService extends Service implements LocationListener {
 	}
 
 	private Context context;
+	private GPSListener gpsListener;
 
 	private boolean isGPSEnabled;
 	private boolean isNetworkEnabled;
@@ -67,33 +68,38 @@ public class GPSService extends Service implements LocationListener {
 	public Location getLocation() {
 		stopUsingGPS();
 		try {
-			locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+			locationManager = (LocationManager) context
+					.getSystemService(LOCATION_SERVICE);
 			// getting GPS status
-			isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			isGPSEnabled = locationManager
+					.isProviderEnabled(LocationManager.GPS_PROVIDER);
 			// getting network status
-			isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			isNetworkEnabled = locationManager
+					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
 			if (isGPSEnabled || isNetworkEnabled) {
 				this.canGetLocation = true;
 				String provider = "";
 				if (isNetworkEnabled) {
-//					Log.d("GPSService", "Network enabled");
+					// Log.d("GPSService", "Network enabled");
 					provider = LocationManager.NETWORK_PROVIDER;
-				}
-				else {
-//					Log.d("GPSService", "GPS enabled");
+				} else {
+					// Log.d("GPSService", "GPS enabled");
 					provider = LocationManager.GPS_PROVIDER;
 				}
 
 				location = locationManager.getLastKnownLocation(provider);
 				if (location == null) {
-					locationManager.requestLocationUpdates(
-							provider,
+					locationManager.requestLocationUpdates(provider,
 							MIN_TIME_BW_UPDATES,
 							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-				}
-				else {
+				} else {
 					onLocationChanged(location);
+				}
+			} else {
+				if (gpsListener != null) {
+					gpsListener.onLocationReceived(false, Double.MIN_VALUE,
+							Double.MIN_VALUE);
 				}
 			}
 
@@ -159,13 +165,15 @@ public class GPSService extends Service implements LocationListener {
 		// Setting Dialog Title
 		alertDialog.setTitle("GPS is settings");
 		// Setting Dialog Message
-		alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+		alertDialog
+				.setMessage("GPS is not enabled. Do you want to go to settings menu?");
 
 		// On pressing Settings button
 		alertDialog.setPositiveButton("Settings",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+						Intent intent = new Intent(
+								Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 						context.startActivity(intent);
 					}
 				});
@@ -202,21 +210,33 @@ public class GPSService extends Service implements LocationListener {
 
 		if (addresses.size() > 0) {
 			Address address = addresses.get(0);
-			locationString = address.getSubAdminArea() + ", " + address.getCountryCode();
+			locationString = address.getSubAdminArea() + ", "
+					+ address.getCountryCode();
+		}
+
+		if (gpsListener != null) {
+			gpsListener.onLocationReceived(true, latitude, longitude);
 		}
 	}
 
 	@Override
-	public void onProviderDisabled(String provider) {}
+	public void onProviderDisabled(String provider) {
+	}
 
 	@Override
-	public void onProviderEnabled(String provider) {}
+	public void onProviderEnabled(String provider) {
+	}
 
 	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
 
 	@Override
 	public IBinder onBind(Intent arg0) {
 		return null;
+	}
+
+	public void setGPSListener(GPSListener gpsListener) {
+		this.gpsListener = gpsListener;
 	}
 }

@@ -2,48 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical" >
 
-    <ScrollView
-        android:id="@+id/scrollViewAddress"
+    <TextView
+        android:id="@+id/tv_adress"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="@string/address_text" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+    <EditText
+        android:id="@+id/et_adress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPostalAddress|textMultiLine" >
 
-            <TextView
-                android:id="@+id/tv_adress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="@string/address_text" />
+        <requestFocus />
+    </EditText>
 
-            <EditText
-                android:id="@+id/et_adress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPostalAddress|textMultiLine" >
+    <TextView
+        android:id="@+id/tv_gps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="left"
+        android:text="@string/use_gps_text" />
 
-                <requestFocus />
-            </EditText>
-
-            <TextView
-                android:id="@+id/tv_gps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="@string/use_gps_text" />
-
-            <Button
-                android:id="@+id/bt_gps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/use_gps_button" />
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/bt_gps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/use_gps_button" />
 
 </LinearLayout>

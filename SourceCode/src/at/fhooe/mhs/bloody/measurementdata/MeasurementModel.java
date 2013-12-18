@@ -18,23 +18,29 @@ import at.fhooe.mhs.bloody.personalData.PersonalData;
 
 /**
  * @author Patrick Hutflesz
- *
+ * 
  */
-public class MeasurementModel implements Serializable {
+public class MeasurementModel implements Serializable
+{
 
 	private static final long serialVersionUID = -8020701936888186372L;
 	private static final String FILE_NAME = "measurementmodel";
 
 	private static MeasurementModel instance;
 
-	public static synchronized MeasurementModel getInstance(Context context) {
-		if (context == null) {
-			throw new NullPointerException("Context for MeasurementModel may not be null!");
+	public static synchronized MeasurementModel getInstance(Context context)
+	{
+		if (context == null)
+		{
+			throw new NullPointerException(
+					"Context for MeasurementModel may not be null!");
 		}
-		if (instance == null) {
+		if (instance == null)
+		{
 			// First invocation, create a new instance
 			boolean exception = false;
-			try {
+			try
+			{
 				// Try to read it from internal storage
 				FileInputStream fis = context.openFileInput(FILE_NAME);
 				ObjectInputStream ois = new ObjectInputStream(fis);
@@ -42,23 +48,28 @@ public class MeasurementModel implements Serializable {
 				ois.close();
 				fis.close();
 			}
-			catch (FileNotFoundException e) {
+			catch (FileNotFoundException e)
+			{
 				e.printStackTrace();
 				exception = true;
 			}
-			catch (StreamCorruptedException e) {
+			catch (StreamCorruptedException e)
+			{
 				e.printStackTrace();
 				exception = true;
 			}
-			catch (IOException e) {
+			catch (IOException e)
+			{
 				e.printStackTrace();
 				exception = true;
 			}
-			catch (ClassNotFoundException e) {
+			catch (ClassNotFoundException e)
+			{
 				e.printStackTrace();
 				exception = true;
 			}
-			if (exception) {
+			if (exception)
+			{
 				// Not able to read from internal storage, create empty instance
 				instance = new MeasurementModel();
 			}
@@ -67,19 +78,24 @@ public class MeasurementModel implements Serializable {
 		return instance;
 	}
 
-	public static synchronized void save(Context context, MeasurementModel model) {
-		try {
+	public static synchronized void save(Context context, MeasurementModel model)
+	{
+		try
+		{
 			context.deleteFile(FILE_NAME);
-			FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+			FileOutputStream fos = context.openFileOutput(FILE_NAME,
+					Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(model);
 			oos.close();
 			fos.close();
 		}
-		catch (FileNotFoundException e) {
+		catch (FileNotFoundException e)
+		{
 			e.printStackTrace();
 		}
-		catch (IOException e) {
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -87,29 +103,41 @@ public class MeasurementModel implements Serializable {
 	private ArrayList<Measurement> measurements;
 	private PersonalData personalData;
 
-	public MeasurementModel() {
+	public MeasurementModel()
+	{
 		measurements = new ArrayList<Measurement>();
 		personalData = new PersonalData();
 	}
 
-	public void addMeasurement(Measurement m) {
+	public void addMeasurement(Measurement m)
+	{
 		measurements.add(m);
 	}
 
-	public int size() {
+	public int size()
+	{
 		return measurements.size();
 	}
 
-	public Measurement getMeasurement(int index) {
+	public Measurement getMeasurement(int index)
+	{
 		return measurements.get(index);
 	}
+	
+	public ArrayList<Measurement> getMeasurements()
+	{
+		return measurements;
+	}
 
-	public PersonalData getPersonalData() {
+	public PersonalData getPersonalData()
+	{
 		return personalData;
 	}
 
-	public Measurement getLast() {
-		if (measurements.isEmpty()) {
+	public Measurement getLast()
+	{
+		if (measurements.isEmpty())
+		{
 			return null;
 		}
 		return measurements.get(measurements.size() - 1);
