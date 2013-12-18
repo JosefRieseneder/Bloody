@@ -41,21 +41,27 @@
 
 package at.fhooe.mhs.bloody.charts;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Vector;
 
 import org.afree.chart.AFreeChart;
-import org.afree.chart.axis.AxisLocation;
+import org.afree.chart.LegendItemCollection;
 import org.afree.chart.axis.DateAxis;
+import org.afree.chart.axis.DateTickMarkPosition;
 import org.afree.chart.axis.NumberAxis;
-import org.afree.chart.plot.CombinedDomainXYPlot;
+import org.afree.chart.axis.ValueAxis;
+import org.afree.chart.plot.DatasetRenderingOrder;
 import org.afree.chart.plot.PlotOrientation;
 import org.afree.chart.plot.XYPlot;
-import org.afree.chart.renderer.xy.StandardXYItemRenderer;
 import org.afree.chart.renderer.xy.XYItemRenderer;
-import org.afree.data.xy.XYDataset;
-import org.afree.data.xy.XYSeries;
-import org.afree.data.xy.XYSeriesCollection;
+import org.afree.chart.title.TextTitle;
+import org.afree.data.time.Day;
+import org.afree.data.time.TimeSeries;
+import org.afree.data.time.TimeSeriesCollection;
+import org.afree.data.xy.IntervalXYDataset;
+import org.afree.date.MonthConstants;
 import org.afree.graphics.geom.Font;
 
 import android.content.Context;
@@ -66,7 +72,6 @@ import at.fhooe.mhs.bloody.R;
  */
 public class BloodPressureChartView extends ChartView
 {
-
 	private Context mContext;
 	private Vector<Integer> mSystolicValues, mDiastolicValues;
 
@@ -83,7 +88,7 @@ public class BloodPressureChartView extends ChartView
 		mSystolicValues = new Vector<Integer>();
 
 		Integer[] sysval = new Integer[]
-		{ 120, 123, 125, 122, 124, 128, 123, 118, 119, 118, 120, 121, 122, 122,
+		{ 120, 181, 179, 159, 139, 129, 123, 118, 119, 118, 120, 121, 122, 122,
 				120 };
 
 		mSystolicValues.addAll(Arrays.asList(sysval));
@@ -95,59 +100,156 @@ public class BloodPressureChartView extends ChartView
 
 		mDiastolicValues.addAll(Arrays.asList(diaval));
 
-		final AFreeChart chart = createCombinedChart();
+		final AFreeChart chart = createChart();
 		// final AFreeChart chart = createChart(createDataset());
 
 		setChart(chart);
 	}
 
-	private AFreeChart createCombinedChart()
+	// private AFreeChart createCombinedChart()
+	// {
+	//
+	// // create subplot 1...
+	// final XYDataset bloodData = createBloodPressureDataSet();
+	// final XYItemRenderer bloodRenderer = new StandardXYItemRenderer();
+	// final NumberAxis bloodRangeAxis = new NumberAxis(mContext
+	// .getResources().getString(R.string.charts_sub_blood));
+	// final XYPlot bloodSubPlot = new XYPlot(bloodData, null, bloodRangeAxis,
+	// bloodRenderer);
+	//
+	// Font font = new Font("Axis", 0, 30);
+	// bloodRangeAxis.setTickLabelFont(font);
+	// bloodRangeAxis.setRange(0, 300);
+	//
+	// bloodSubPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+	//
+	// // final XYTextAnnotation annotation = new XYTextAnnotation("Hello!",
+	// // 50.0, 10000.0);
+	// // annotation.setRotationAngle(Math.PI / 4.0);
+	// // subplot1.addAnnotation(annotation);
+	//
+	// // create subplot 2...
+	// final XYDataset airData = createAirPressureDataSet();
+	// final XYItemRenderer airRenderer = new StandardXYItemRenderer();
+	// final NumberAxis airRangeAxis = new NumberAxis(mContext.getResources()
+	// .getString(R.string.charts_sub_air));
+	// airRangeAxis.setAutoRangeIncludesZero(false);
+	// final XYPlot airSubplot = new XYPlot(airData, null, airRangeAxis,
+	// airRenderer);
+	// airSubplot.setRangeAxisLocation(AxisLocation.TOP_OR_LEFT);
+	//
+	// // parent plot...
+	// final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(
+	// new DateAxis());
+	// plot.setGap(20.0);
+	//
+	// // add the subplots...
+	// plot.add(bloodSubPlot, 1);
+	// plot.add(airSubplot, 1);
+	// plot.setOrientation(PlotOrientation.VERTICAL);
+	//
+	// // return a new chart containing the overlaid plot...
+	// return new AFreeChart(mContext.getResources().getString(
+	// R.string.charts_title), AFreeChart.DEFAULT_TITLE_FONT, plot,
+	// true);
+	//
+	// }
+
+	/**
+	 * Creates an overlaid chart.
+	 * 
+	 * @return The chart.
+	 */
+	private AFreeChart createChart()
 	{
+		Font axisFont = new Font("Axis", 0, 20);
+		Font titleFont = new Font("Title", 0, 30);
 
-		// create subplot 1...
-		final XYDataset bloodData = createBloodPressureDataSet();
-		final XYItemRenderer bloodRenderer = new StandardXYItemRenderer();
-		final NumberAxis bloodRangeAxis = new NumberAxis(mContext
-				.getResources().getString(R.string.charts_sub_blood));
-		final XYPlot bloodSubPlot = new XYPlot(bloodData, null, bloodRangeAxis,
-				bloodRenderer);
+		DateAxis dateAxis = new DateAxis(mContext.getResources().getString(
+				R.string.date_value));
+		dateAxis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);
+		dateAxis.setTickLabelFont(axisFont);
+		dateAxis.setDateFormatOverride(new SimpleDateFormat("dd.MMM", Locale
+				.getDefault()));
+		dateAxis.setLabelFont(titleFont);
 
-		Font font = new Font("Axis", 0, 30);
-		bloodRangeAxis.setTickLabelFont(font);
-		bloodRangeAxis.setRange(0, 300);
+		ValueAxis bloodRangeAxis = new NumberAxis(mContext.getResources()
+				.getString(R.string.charts_sub_blood));
 
-		bloodSubPlot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+		bloodRangeAxis.setTickLabelFont(axisFont);
+		bloodRangeAxis.setLabelFont(titleFont);
+		bloodRangeAxis.setRange(0, 200);
 
-		// final XYTextAnnotation annotation = new XYTextAnnotation("Hello!",
-		// 50.0, 10000.0);
-		// annotation.setRotationAngle(Math.PI / 4.0);
-		// subplot1.addAnnotation(annotation);
+		IntervalXYDataset barDiaData = createBarDataSet();
+
+		mContext.getResources().getColor(R.color.normal_green);
+
+		XYItemRenderer barRenderer = new CustomBarRenderer(mContext, 2, false,
+				mSystolicValues, mDiastolicValues);
+
+		// barRenderer.setSeriesPaintType(0, new SolidColor(mContext
+		// .getResources().getColor(R.color.normal_green)));
+		// barRenderer.setSeriesPaintType(1, new SolidColor(mContext
+		// .getResources().getColor(R.color.light_green)));
+		// barRenderer.setSeriesPaintType(2, new SolidColor(mContext
+		// .getResources().getColor(R.color.light_blue)));
+		// barRenderer.setSeriesPaintType(3, new SolidColor(mContext
+		// .getResources().getColor(R.color.light_orange)));
+		// barRenderer.setSeriesPaintType(4, new SolidColor(mContext
+		// .getResources().getColor(R.color.normal_orange)));
+		// barRenderer.setSeriesPaintType(5, new SolidColor(mContext
+		// .getResources().getColor(R.color.normal_red)));
+
+		XYPlot plot = new XYPlot(barDiaData, dateAxis, bloodRangeAxis,
+				barRenderer);
+
+		IntervalXYDataset barSysData = createBarDataSet();
+
+		plot.setDataset(2, barSysData);
+		plot.setRenderer(2, barRenderer);
+
+		// PaintType paintType = new SolidColor(Color.GREEN);
+		//
+		// plot.getRendererForDataset(plot.getDataset(0)).setSeriesPaintType(0,
+		// paintType);
 
 		// create subplot 2...
-		final XYDataset airData = createAirPressureDataSet();
-		final XYItemRenderer airRenderer = new StandardXYItemRenderer();
-		final NumberAxis airRangeAxis = new NumberAxis(mContext.getResources()
-				.getString(R.string.charts_sub_air));
-		airRangeAxis.setAutoRangeIncludesZero(false);
-		final XYPlot airSubplot = new XYPlot(airData, null, airRangeAxis,
-				airRenderer);
-		airSubplot.setRangeAxisLocation(AxisLocation.TOP_OR_LEFT);
+		// XYDataset data2A = createDataset2A();
+		// plot.setDataset(1, data2A);
+		// XYItemRenderer renderer2A = new StandardXYItemRenderer();
+		// plot.setRenderer(1, renderer2A);
+		// renderer2A.setSeriesStroke(0, 2.0f);
+		//
+		// XYDataset data2B = createDataset2B();
+		// plot.setDataset(2, data2B);
+		// plot.setRenderer(2, new StandardXYItemRenderer());
+		// plot.getRenderer(2).setSeriesStroke(0, 2.0f);
 
-		// parent plot...
-		final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(
-				new DateAxis());
-		plot.setGap(20.0);
+		// plot.mapDatasetToRangeAxis(2, 1);
 
-		// add the subplots...
-		plot.add(bloodSubPlot, 1);
-		plot.add(airSubplot, 1);
+		plot.setDatasetRenderingOrder(DatasetRenderingOrder.REVERSE);
 		plot.setOrientation(PlotOrientation.VERTICAL);
 
-		// return a new chart containing the overlaid plot...
-		return new AFreeChart(mContext.getResources().getString(
-				R.string.charts_title), AFreeChart.DEFAULT_TITLE_FONT, plot,
-				true);
+		// LegendItemCollection legendItemsOld = plot.getLegendItems();
+		final LegendItemCollection legendItemsNew = new LegendItemCollection();
 
+		// for (int i = 0; i < 6; i++)
+		// {
+		// LegendItem item = legendItemsOld.get(i);
+		// item.setLabelFont(axisFont);
+		// legendItemsNew.add(item);
+		// }
+
+		plot.setFixedLegendItems(legendItemsNew);
+
+		AFreeChart chart = new AFreeChart(mContext.getResources().getString(
+				R.string.timeline), AFreeChart.DEFAULT_TITLE_FONT, plot, true);
+
+		TextTitle title = chart.getTitle();
+		title.setFont(titleFont);
+		chart.setTitle(title);
+
+		return chart;
 	}
 
 	/**
@@ -155,80 +257,100 @@ public class BloodPressureChartView extends ChartView
 	 * 
 	 * @return Series 1.
 	 */
-	private XYDataset createBloodPressureDataSet()
+	private IntervalXYDataset createBarDataSet()
 	{
-		// create dataset 1...
-		final XYSeries sysSeries = new XYSeries(mContext.getResources()
-				.getString(R.string.systolic_value));
-		sysSeries.add(10.0, 120);
-		sysSeries.add(20.0, 123);
-		sysSeries.add(30.0, 125);
-		sysSeries.add(40.0, 122);
-		sysSeries.add(50.0, 124);
-		sysSeries.add(60.0, 128);
-		sysSeries.add(70.0, 123);
-		sysSeries.add(80.0, 118);
-		sysSeries.add(90.0, 119);
-		sysSeries.add(100.0, 118);
-		sysSeries.add(110.0, 120);
-		sysSeries.add(120.0, 121);
-		sysSeries.add(130.0, 122);
-		sysSeries.add(140.0, 122);
-		sysSeries.add(150.0, 120);
+		// TimeSeries optimal = new
+		// TimeSeries(mContext.getResources().getString(
+		// R.string.charts_optimal_value));
+		// TimeSeries normal = new TimeSeries(mContext.getResources().getString(
+		// R.string.charts_normal_value));
+		// TimeSeries highNormal = new TimeSeries(mContext.getResources()
+		// .getString(R.string.charts_normal_high_value));
+		// TimeSeries hypertony1 = new TimeSeries(mContext.getResources()
+		// .getString(R.string.charts_hypertonia1_value));
+		// TimeSeries hypertony2 = new TimeSeries(mContext.getResources()
+		// .getString(R.string.charts_hypertonia2_value));
+		// TimeSeries hypertony3 = new TimeSeries(mContext.getResources()
+		// .getString(R.string.charts_hypertonia3_value));
+		//
+		// for (int i = 0; i < values.size(); i++)
+		// {
+		// int value = values.get(i);
+		//
+		// if (value < scala[0])
+		// optimal.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+		// values.get(i));
+		// else if (value < scala[1])
+		// normal.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+		// values.get(i));
+		// else if (value < scala[2])
+		// highNormal.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+		// values.get(i));
+		// else if (value < scala[3])
+		// hypertony1.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+		// values.get(i));
+		// else if (value < scala[4])
+		// hypertony2.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+		// values.get(i));
+		// else
+		// hypertony3.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+		// values.get(i));
+		// }
 
-		final XYSeries diaSeries = new XYSeries(mContext.getResources()
+		TimeSeries systolic = new TimeSeries(mContext.getResources().getString(
+				R.string.systolic_value));
+
+		TimeSeries diastolic = new TimeSeries(mContext.getResources()
 				.getString(R.string.diastolic_value));
-		diaSeries.add(10.0, 80);
-		diaSeries.add(20.0, 83);
-		diaSeries.add(30.0, 85);
-		diaSeries.add(40.0, 82);
-		diaSeries.add(50.0, 84);
-		diaSeries.add(60.0, 88);
-		diaSeries.add(70.0, 83);
-		diaSeries.add(80.0, 78);
-		diaSeries.add(90.0, 79);
-		diaSeries.add(100.0, 78);
-		diaSeries.add(110.0, 80);
-		diaSeries.add(120.0, 81);
-		diaSeries.add(130.0, 82);
-		diaSeries.add(140.0, 82);
-		diaSeries.add(150.0, 80);
 
-		final XYSeriesCollection collection = new XYSeriesCollection();
-		collection.addSeries(sysSeries);
-		collection.addSeries(diaSeries);
+		for (int i = 0; i < mSystolicValues.size(); i++)
+		{
+			systolic.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+					mSystolicValues.get(i));
+		}
+
+		for (int i = 0; i < mDiastolicValues.size(); i++)
+		{
+			diastolic.add(new Day(i + 1, MonthConstants.DECEMBER, 2013),
+					mDiastolicValues.get(i));
+		}
+
+		TimeSeriesCollection collection = new TimeSeriesCollection();
+
+		collection.addSeries(diastolic);
+		collection.addSeries(systolic);
+
 		return collection;
-
 	}
 
-	/**
-	 * Creates a sample dataset.
-	 * 
-	 * @return Series 2.
-	 */
-	private XYDataset createAirPressureDataSet()
-	{
-
-		// create dataset 2...
-		final XYSeries series2 = new XYSeries(mContext.getResources()
-				.getString(R.string.charts_sub_air));
-
-		series2.add(10.0, 16853.2);
-		series2.add(20.0, 19642.3);
-		series2.add(30.0, 18253.5);
-		series2.add(40.0, 15352.3);
-		series2.add(50.0, 13532.0);
-		series2.add(100.0, 12635.3);
-		series2.add(110.0, 13998.2);
-		series2.add(120.0, 11943.2);
-		series2.add(130.0, 16943.9);
-		series2.add(140.0, 17843.2);
-		series2.add(150.0, 16495.3);
-		series2.add(160.0, 17943.6);
-		series2.add(170.0, 18500.7);
-		series2.add(180.0, 19595.9);
-
-		return new XYSeriesCollection(series2);
-
-	}
+	// /**
+	// * Creates a sample dataset.
+	// *
+	// * @return Series 2.
+	// */
+	// private XYDataset createAirPressureDataSet()
+	// {
+	//
+	// // create dataset 2...
+	// final XYSeries series2 = new XYSeries(mContext.getResources()
+	// .getString(R.string.charts_sub_air));
+	//
+	// series2.add(10.0, 16853.2);
+	// series2.add(20.0, 19642.3);
+	// series2.add(30.0, 18253.5);
+	// series2.add(40.0, 15352.3);
+	// series2.add(50.0, 13532.0);
+	// series2.add(100.0, 12635.3);
+	// series2.add(110.0, 13998.2);
+	// series2.add(120.0, 11943.2);
+	// series2.add(130.0, 16943.9);
+	// series2.add(140.0, 17843.2);
+	// series2.add(150.0, 16495.3);
+	// series2.add(160.0, 17943.6);
+	// series2.add(170.0, 18500.7);
+	// series2.add(180.0, 19595.9);
+	//
+	// return new XYSeriesCollection(series2);
+	//
+	// }
 }

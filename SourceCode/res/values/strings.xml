@@ -31,7 +31,6 @@
     <string name="height">Enter your height</string>
     <string name="unit_cm">cm</string>
     <string name="unit_ft">ft</string>
-    
     <string name="measurement_time">I usually measure my blood pressure at</string>
     <string name="address_text">Please enter your address where you usually measure your blood pressure</string>
     <string name="use_gps_text">You can press the button to detect your address using GPS</string>
@@ -48,10 +47,16 @@
     <string name="health_status">Helth Status</string>
     <string name="share">Share</string>
     <string name="timeline">Timeline</string>
-    
+
     <!-- charts -->
     <string name="charts_title">Helth Status</string>
     <string name="charts_sub_blood">Blood pressure</string>
     <string name="charts_sub_air">Air pressure</string>
+    <string name="charts_optimal_value">Optimal</string>
+    <string name="charts_normal_value">Normal</string>
+    <string name="charts_normal_high_value">Normal high</string>
+    <string name="charts_hypertonia1_value">Hypertonia 1</string>
+    <string name="charts_hypertonia2_value">Hypertonia 2</string>
+    <string name="charts_hypertonia3_value">Hypertonia 3</string>
 
 </resources>

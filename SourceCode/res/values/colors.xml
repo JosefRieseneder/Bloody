@@ -4,5 +4,15 @@
     <color name="pure_black">#000000</color>
     <color name="light_blue">#81DAF5</color>
     <color name="middle_blue">#01A9DB</color>
+    <color name="light_blue">#33B5E5</color>
+    <color name="ligth_violet">#AA66CC</color>
+    <color name="light_green">#99CC00</color>
+    <color name="light_orange">#FFBB33</color>
+    <color name="light_red">#FF4444</color>
+    <color name="normal_blue">#0099CC</color>
+    <color name="normal_violet">#9933CC</color>
+    <color name="normal_green">#669900</color>
+    <color name="normal_orange">#FF8800</color>
+    <color name="normal_red">#CC0000</color>
 
 </resources>
