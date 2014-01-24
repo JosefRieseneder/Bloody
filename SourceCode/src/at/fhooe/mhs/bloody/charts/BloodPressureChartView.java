@@ -234,7 +234,7 @@ public class BloodPressureChartView extends ChartView
 			date = mDates.get(i);
 
 			systolic.add(
-					new Day(date.getDay(), date.getMonth(), date.getYear()),
+					new Day(date.getDay(), date.getMonth(), date.getYear()+1900),
 					mSystolicValues.get(i));
 		}
 
@@ -243,7 +243,7 @@ public class BloodPressureChartView extends ChartView
 			date = mDates.get(i);
 
 			diastolic.add(
-					new Day(date.getDay(), date.getMonth(), date.getYear()),
+					new Day(date.getDay(), date.getMonth(), date.getYear()+1900),
 					mDiastolicValues.get(i));
 		}
 
